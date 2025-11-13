@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Kichuk Auto Logo</title>
+  <desc id="desc">Hexagonal badge with stylised letters K A and the text Kichuk Auto</desc>
+  <defs>
+    <linearGradient id="yellowShade" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f7c636" />
+      <stop offset="100%" stop-color="#f5a91c" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="#f5b400" />
+  <polygon points="128,64 384,64 512,256 384,448 128,448 0,256" fill="#111111" />
+  <g fill="url(#yellowShade)">
+    <path d="M132 144h72v92l82-92h88l-114 128 120 136h-94l-82-96v96h-72z" />
+    <path d="M318 144h84l122 272h-80l-20-46h-124l-20 46h-78zm44 160h70l-35-80z" />
+  </g>
+  <text x="256" y="438" fill="#f5b400" font-family="Montserrat, Arial Black, sans-serif" font-size="48" font-weight="700" text-anchor="middle">
+    KICHUK AUTO
+  </text>
+</svg>
+

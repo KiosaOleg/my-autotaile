@@ -1,6 +1,6 @@
 "use client";
 
-import { ShoppingCart, Heart } from "lucide-react";
+import { ShoppingCart, Star } from "lucide-react";
 import { useState } from "react";
 
 interface Product {
@@ -105,9 +105,9 @@ export default function PopularProducts() {
   };
 
   return (
-    <section className="py-12 lg:py-16 bg-gray-50">
+    <section className="bg-[var(--background)]">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-8">
+        <h2 className="text-3xl lg:text-4xl font-bold text-[var(--secondary)] mb-8 uppercase">
           Популярні товари
         </h2>
 
@@ -115,47 +115,49 @@ export default function PopularProducts() {
           {products.map((product) => (
             <div
               key={product.id}
-              className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow p-6 relative"
+              className="bg-[var(--card)] rounded-lg shadow-md hover:shadow-xl transition-shadow p-6 relative border border-[var(--border)]"
             >
               {/* Кнопка улюблених */}
               <button
                 onClick={() => toggleFavorite(product.id)}
-                className="absolute top-4 right-4 p-2 hover:bg-gray-100 rounded-full transition-colors"
+                className="absolute top-4 right-4 p-2 hover:bg-[var(--muted)] rounded-full transition-colors"
                 aria-label="Додати до улюблених"
               >
-                <Heart
-                  size={20}
+                <Star
+                  size={18}
                   className={
                     favorites.includes(product.id)
-                      ? "fill-purple-500 text-purple-500"
-                      : "text-gray-400"
+                      ? "fill-[var(--primary)] text-[var(--primary)]"
+                      : "text-[var(--border)]"
                   }
                 />
               </button>
 
               {/* Зображення товару */}
-              <div className="w-full h-48 bg-gray-100 rounded-lg flex items-center justify-center mb-4">
-                <span className="text-6xl">{product.image}</span>
+              <div className="w-full h-48 bg-[var(--muted)]/60 rounded-lg flex items-center justify-center mb-4">
+                <span className="text-6xl text-[var(--secondary)]">
+                  {product.image}
+                </span>
               </div>
 
               {/* Бренд */}
               <div className="mb-2">
-                <span className="text-lg font-bold text-gray-900 uppercase">
+                <span className="text-lg font-bold text-[var(--secondary)] uppercase">
                   {product.brand}
                 </span>
               </div>
 
               {/* Назва товару */}
-              <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+              <p className="text-sm text-[var(--foreground)]/70 mb-4 line-clamp-2">
                 {product.name}
               </p>
 
               {/* Ціна та кнопка */}
               <div className="flex items-center justify-between">
-                <div className="text-xl font-bold text-gray-900">
+                <div className="text-xl font-bold text-[var(--secondary)]">
                   {product.price} {product.currency}
                 </div>
-                <button className="bg-purple-500 hover:bg-purple-600 text-white p-3 rounded-lg transition-colors shadow-md">
+                <button className="bg-[var(--primary)] hover:bg-[var(--brand-yellow-light)] text-[var(--primary-foreground)] px-4 py-2 rounded-full transition-colors shadow-md font-semibold uppercase text-xs tracking-wide">
                   <ShoppingCart size={20} />
                 </button>
               </div>
@@ -166,4 +168,3 @@ export default function PopularProducts() {
     </section>
   );
 }
-

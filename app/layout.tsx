@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AUTOPRO - Автозапчасти",
-  description: "Интернет-магазин автозапчастей",
+  title: "Kichuk Auto — автозапчастини",
+  description: "Kichuk Auto: інтернет-магазин оригінальних та аналогових автозапчастин",
 };
 
 export default function RootLayout({

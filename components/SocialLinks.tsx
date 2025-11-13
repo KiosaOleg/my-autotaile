@@ -14,34 +14,38 @@ const socialLinks: SocialLink[] = [
     name: "Telegram",
     icon: Send,
     href: "#",
-    color: "bg-blue-500 hover:bg-blue-600",
+    color:
+      "bg-[var(--primary)] hover:bg-[var(--brand-yellow-light)] text-[var(--primary-foreground)]",
   },
   {
     name: "Instagram",
     icon: Instagram,
     href: "#",
-    color: "bg-pink-500 hover:bg-pink-600",
+    color:
+      "bg-[var(--secondary)] hover:bg-[var(--brand-black-soft)] text-[var(--secondary-foreground)]",
   },
   {
     name: "Facebook",
     icon: Facebook,
     href: "#",
-    color: "bg-blue-600 hover:bg-blue-700",
+    color:
+      "bg-[var(--secondary-foreground)] hover:bg-[var(--brand-yellow-light)] text-[var(--secondary)]",
   },
   {
     name: "YouTube",
     icon: Youtube,
     href: "#",
-    color: "bg-red-600 hover:bg-red-700",
+    color:
+      "bg-[var(--brand-yellow-dark)] hover:bg-[var(--secondary)] text-[var(--primary-foreground)]",
   },
 ];
 
 export default function SocialLinks() {
   return (
-    <section className="py-8 bg-gray-100">
+    <section className="bg-[var(--background)]">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col items-center">
-          <h3 className="text-xl font-semibold text-gray-700 mb-6">
+        <div className="bg-[var(--card)] border border-[var(--border)] rounded-3xl shadow-lg px-6 py-10 flex flex-col items-center gap-6">
+          <h3 className="text-xl font-semibold text-[var(--secondary)] uppercase tracking-wide">
             Ми в соціальних мережах
           </h3>
           <div className="flex gap-4">
@@ -53,7 +57,7 @@ export default function SocialLinks() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`${social.color} text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all transform hover:scale-110`}
+                  className={`${social.color} p-4 rounded-2xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1`}
                   aria-label={social.name}
                 >
                   <Icon size={24} />
@@ -66,4 +70,3 @@ export default function SocialLinks() {
     </section>
   );
 }
-

@@ -1,22 +1,23 @@
 "use client";
 
+import Image from "next/image";
 import { Phone, Mail, MapPin, Send, MessageCircle } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-gradient-to-b from-blue-900 to-blue-950 text-white">
+    <footer className="bg-gradient-to-br from-[#3a3a3a] via-[#2d2d2d] to-[#3a3a3a] text-[var(--brand-yellow-light)] border-t border-[#4a4a4a]/50">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Колонка 1: Інформація */}
           <div>
-            <h3 className="text-lg font-bold text-blue-300 mb-4 uppercase">
+            <h3 className="text-lg font-bold text-[var(--brand-yellow-light)] mb-4 uppercase">
               Інформація
             </h3>
             <ul className="space-y-2">
               <li>
                 <a
                   href="#"
-                  className="text-white hover:text-blue-300 transition-colors"
+                  className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
                 >
                   Про компанію
                 </a>
@@ -24,7 +25,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  className="text-white hover:text-blue-300 transition-colors"
+                  className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
                 >
                   Контакти
                 </a>
@@ -32,7 +33,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  className="text-white hover:text-blue-300 transition-colors"
+                  className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
                 >
                   Акції
                 </a>
@@ -40,7 +41,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  className="text-white hover:text-blue-300 transition-colors"
+                  className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
                 >
                   Допомога (FAQ)
                 </a>
@@ -48,7 +49,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  className="text-white hover:text-blue-300 transition-colors"
+                  className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
                 >
                   Кешбек і сертифікати
                 </a>
@@ -58,14 +59,14 @@ export default function Footer() {
 
           {/* Колонка 2: Графік роботи та умови */}
           <div>
-            <h3 className="text-lg font-bold text-blue-300 mb-4 uppercase">
+            <h3 className="text-lg font-bold text-[var(--brand-yellow-light)] mb-4 uppercase">
               Графік роботи
             </h3>
             <ul className="space-y-2 mb-6">
               <li>
                 <a
                   href="#"
-                  className="text-white hover:text-blue-300 transition-colors"
+                  className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
                 >
                   Доставка і оплата
                 </a>
@@ -73,7 +74,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  className="text-white hover:text-blue-300 transition-colors"
+                  className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
                 >
                   Умови повернення та обміну
                 </a>
@@ -81,7 +82,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  className="text-white hover:text-blue-300 transition-colors"
+                  className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
                 >
                   Гарантія
                 </a>
@@ -89,7 +90,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  className="text-white hover:text-blue-300 transition-colors"
+                  className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
                 >
                   Договір публічної оферти
                 </a>
@@ -97,20 +98,26 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  className="bg-blue-700 px-3 py-1 rounded text-white hover:bg-blue-600 transition-colors inline-block"
+                  className="bg-primary px-3 py-1 rounded text-primary-foreground hover:bg-[var(--brand-yellow-light)] hover:text-secondary transition-colors inline-block"
                 >
                   Політика конфіденційності
                 </a>
               </li>
             </ul>
 
-            <div className="border-t border-blue-700 pt-4">
-              <div className="space-y-1 text-sm">
+            <div className="border-t border-[#4a4a4a]/50 pt-4">
+              <div className="space-y-1 text-sm text-[var(--brand-yellow-light)]/80">
                 <p>
-                  <span className="text-blue-300">Пн-Пт:</span> 8:00 - 21:00
+                  <span className="text-[var(--brand-yellow-light)] font-semibold">
+                    Пн-Пт:
+                  </span>{" "}
+                  8:00 - 21:00
                 </p>
                 <p>
-                  <span className="text-blue-300">Сб-Нд:</span> 8:00 - 21:00
+                  <span className="text-[var(--brand-yellow-light)] font-semibold">
+                    Сб-Нд:
+                  </span>{" "}
+                  8:00 - 21:00
                 </p>
               </div>
             </div>
@@ -120,16 +127,27 @@ export default function Footer() {
           <div>
             <div className="mb-6">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 bg-blue-700 rounded-lg flex items-center justify-center">
-                  <span className="text-white text-xl font-bold">A</span>
+                <div className="relative w-16 h-16">
+                  <Image
+                    src="/logo.jpg"
+                    alt="Kichuk Auto logo"
+                    fill
+                    sizes="64px"
+                    className="object-contain"
+                  />
                 </div>
-                <span className="text-2xl font-bold">AUTOPRO</span>
+                <span className="text-2xl font-bold text-[var(--brand-yellow-light)]">
+                  KICHUK AUTO
+                </span>
               </div>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-4 text-[var(--brand-yellow-light)]/80">
               <div className="flex items-start gap-3">
-                <MapPin size={20} className="text-blue-300 mt-1 flex-shrink-0" />
+                <MapPin
+                  size={20}
+                  className="text-[var(--brand-yellow-light)] mt-1 flex-shrink-0"
+                />
                 <div className="text-sm">
                   <p>м. Одеса, 65121</p>
                   <p>Проспект Небесної Сотні 75/2</p>
@@ -139,16 +157,22 @@ export default function Footer() {
               <div className="space-y-2">
                 <a
                   href="tel:+380730000058"
-                  className="flex items-center gap-3 text-white hover:text-blue-300 transition-colors"
+                  className="flex items-center gap-3 hover:text-[var(--brand-yellow-light)] transition-colors"
                 >
-                  <Phone size={18} className="text-blue-300" />
+                  <Phone
+                    size={18}
+                    className="text-[var(--brand-yellow-light)]"
+                  />
                   <span>+38 073 000-00-58</span>
                 </a>
                 <a
                   href="tel:+380680805858"
-                  className="flex items-center gap-3 text-white hover:text-blue-300 transition-colors"
+                  className="flex items-center gap-3 hover:text-[var(--brand-yellow-light)] transition-colors"
                 >
-                  <Phone size={18} className="text-blue-300" />
+                  <Phone
+                    size={18}
+                    className="text-[var(--brand-yellow-light)]"
+                  />
                   <span>+38 068 080-58-58</span>
                 </a>
               </div>
@@ -156,44 +180,52 @@ export default function Footer() {
               <div className="flex items-center gap-3">
                 <a
                   href="tel:+380730000058"
-                  className="w-10 h-10 bg-blue-700 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors"
+                  className="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-[var(--brand-yellow-light)] hover:text-secondary transition-colors"
                   aria-label="Telegram"
                 >
-                  <Send size={18} />
+                  <Send
+                    size={18}
+                    className="text-primary-foreground"
+                  />
                 </a>
                 <a
                   href="tel:+380730000058"
-                  className="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center hover:bg-purple-700 transition-colors"
+                  className="w-10 h-10 bg-[var(--brand-yellow-light)] rounded-full flex items-center justify-center hover:bg-primary hover:text-secondary transition-colors"
                   aria-label="Viber"
                 >
-                  <MessageCircle size={18} />
+                  <MessageCircle
+                    size={18}
+                    className="text-secondary"
+                  />
                 </a>
                 <a
                   href="tel:+380730000058"
-                  className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center hover:bg-green-600 transition-colors"
+                  className="w-10 h-10 bg-[var(--brand-yellow-light)] rounded-full flex items-center justify-center hover:bg-primary transition-colors"
                   aria-label="WhatsApp"
                 >
-                  <MessageCircle size={18} />
+                  <MessageCircle
+                    size={18}
+                    className="text-secondary"
+                  />
                 </a>
               </div>
 
               <a
-                href="mailto:support@autopro.com.ua"
-                className="flex items-center gap-3 text-white hover:text-blue-300 transition-colors"
+                href="mailto:support@kichukauto.com.ua"
+                className="flex items-center gap-3 hover:text-[var(--brand-yellow-light)] transition-colors"
               >
-                <Mail size={18} className="text-blue-300" />
-                <span>support@autopro.com.ua</span>
+                <Mail size={18} className="text-[var(--brand-yellow-light)]" />
+                <span>support@kichukauto.com.ua</span>
               </a>
             </div>
           </div>
         </div>
 
         {/* Нижня частина футера */}
-        <div className="border-t border-blue-800 mt-8 pt-6 text-center text-sm text-blue-300">
-          <p>© 2024 AUTOPRO. Всі права захищені.</p>
+        <div className="border-t border-[#4a4a4a]/50 mt-8 pt-6 text-center text-sm text-[var(--brand-yellow-light)]/60">
+          <p>© 2024 Kichuk Auto. Всі права захищені.</p>
         </div>
       </div>
     </footer>
   );
 }
-

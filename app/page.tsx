@@ -1,32 +1,35 @@
-import PartsRequestForm from "@/components/PartsRequestForm";
+import PartsRequestButton from "@/components/PartsRequestButton";
 import BannerCarousel from "@/components/BannerCarousel";
 import TextBlock from "@/components/TextBlock";
 import PopularProducts from "@/components/PopularProducts";
 import SocialLinks from "@/components/SocialLinks";
 import Footer from "@/components/Footer";
+import PartsRequestForm from "@/components/PartsRequestForm";
 
 export default function Home() {
   return (
     <main className="min-h-screen">
-      {/* Блок 3: Форма для заявки на підбір запчастин */}
-      <PartsRequestForm />
+      <div className="flex flex-col gap-16 mb-16">
+        {/* Герой банер */}
+        <BannerCarousel />
 
-      {/* Блок 4: Банери що гортаються */}
-      <BannerCarousel />
+        {/* Кнопка для відкриття форми підбору */}
+        <PartsRequestButton />
 
-      {/* Блок 5: Текстовий блок */}
-      <TextBlock />
+        {/* Інформаційний блок */}
+        <TextBlock />
 
-      {/* Блок 6: Популярні товари */}
-      <PopularProducts />
+        {/* Популярні товари */}
+        <PopularProducts />
 
-      {/* Блок 7: Іконки соціальних сторінок */}
-      <SocialLinks />
+        {/* Соціальні мережі */}
+        <SocialLinks />
 
-      {/* Блок 8: Форма для заявки на підбір запчастин (друга) */}
-      <PartsRequestForm />
+        {/* Додаткова кнопка для форми */}
+        <PartsRequestForm />
+      </div>
 
-      {/* Блок 9: Підвал */}
+      {/* Підвал */}
       <Footer />
     </main>
   );
