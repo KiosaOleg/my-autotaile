@@ -8,7 +8,7 @@ export default function HeaderBottom() {
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
-    <div className="sticky top-0 z-40 border-b border-(--border)/70 bg-background shadow-sm">
+    <div className="px-5 sticky top-0 z-40 border-b border-(--border)/70 bg-background shadow-sm">
       <div className="container mx-auto px-4 py-2 lg:py-2">
         <div className="flex flex-wrap items-center justify-between gap-4 lg:gap-6">
           {/* Logo */}
@@ -24,11 +24,11 @@ export default function HeaderBottom() {
               />
             </div>
             <div className="flex flex-col text-center lg:text-left">
-              <span className="text-(--foreground)/60 text-[10px] lg:text-xs font-semibold uppercase tracking-wider">
-                автозапчастини
-              </span>
               <span className="text-secondary text-xl lg:text-2xl font-bold tracking-tight">
-                KICHUK AUTO
+                KICHUK AUTOPARTS
+              </span>
+              <span className="text-(--foreground)/60 text-[10px] lg:text-xs font-semibold uppercase tracking-wider">
+                твій ритм руху
               </span>
             </div>
           </div>

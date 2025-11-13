@@ -1,17 +1,18 @@
 import { MessageCircle } from "lucide-react";
+import { ThemeToggle } from "./theme-toggle";
 
 const topNavItems = [
   { label: "Про компанію", href: "#" },
   { label: "Контакти", href: "#" },
   { label: "Доставка і оплата", href: "#" },
   { label: "Умови повернення", href: "#" },
-  { label: "Політика конфіденційності", href: "#" },
-  { label: "Договір публічної оферти", href: "#" },
+  // { label: "Політика конфіденційності", href: "#" },
+  // { label: "Договір публічної оферти", href: "#" },
 ];
 
 export default function HeaderTop() {
   return (
-    <div className="border-b border-(--border)/70 bg-(--background)/80">
+    <div className="px-5 border-b border-(--border)/70 bg-(--background)/80">
       <div className="container mx-auto px-4 py-2">
         <div className="flex items-center justify-between gap-3 flex-wrap text-xs text-(--foreground)/70">
           <nav className="flex items-center gap-3 flex-wrap">
@@ -33,7 +34,7 @@ export default function HeaderTop() {
               <span>Пн-Пт 9:00-18:00</span>
               <span>Сб 9:00-14:00</span>
             </div>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+            <div className="mr-4 flex flex-col sm:flex-row items-start sm:items-center gap-3">
               <a
                 href="tel:+380934967470"
                 className="flex items-center gap-2 text-foreground hover:text-secondary transition-colors"
@@ -53,10 +54,10 @@ export default function HeaderTop() {
                 </span>
               </a>
             </div>
+            <ThemeToggle />
           </div>
         </div>
       </div>
     </div>
   );
 }
-
