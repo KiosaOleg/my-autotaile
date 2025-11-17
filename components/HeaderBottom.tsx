@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Search, User, ShoppingCart } from "lucide-react";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function HeaderBottom() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -12,7 +13,7 @@ export default function HeaderBottom() {
       <div className="container mx-auto px-4 py-2 lg:py-2">
         <div className="flex flex-wrap items-center justify-between gap-4 lg:gap-6">
           {/* Logo */}
-          <div className="flex items-center gap-3 lg:gap-4 shrink-0">
+          <Link href="/" className="flex items-center gap-3 lg:gap-4 shrink-0">
             <div className="relative w-16 h-16 lg:w-[72px] lg:h-[72px]">
               <Image
                 src="/logo.jpg"
@@ -31,7 +32,7 @@ export default function HeaderBottom() {
                 твій ритм руху
               </span>
             </div>
-          </div>
+          </Link>
 
           {/* Search & Actions */}
           <div className="flex items-center gap-3 flex-1 min-w-[220px] justify-center">
