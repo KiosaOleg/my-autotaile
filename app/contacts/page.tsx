@@ -15,7 +15,8 @@ export default function ContactsPage() {
               <p className="text-sm text-muted-foreground">
                 м. Одеса, 65121
                 <br />
-                Проспект Небесної Сотні 75/2
+                Проспект Небесної Сотні 2А,
+                <br /> ринок Успіх, магазин 214
               </p>
             </div>
 

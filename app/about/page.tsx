@@ -79,7 +79,7 @@ export default function AboutPage() {
                 Наша адреса
               </h2>
               <p className="text-sm text-muted-foreground">
-                м. Одеса, Проспект Небесної Сотні 2А, ринок Успіх магазин 214
+                м. Одеса, Проспект Небесної Сотні 2А, ринок Успіх, магазин 214
               </p>
 
               <div className="space-y-1 text-sm text-muted-foreground">

@@ -17,7 +17,7 @@ export default function Footer() {
               <ul className="space-y-2">
                 <li>
                   <a
-                    href="#"
+                    href="/about"
                     className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
                   >
                     Про компанію
@@ -25,7 +25,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <a
-                    href="#"
+                    href="/contacts"
                     className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
                   >
                     Контакти
@@ -59,7 +59,7 @@ export default function Footer() {
               <ul className="space-y-2 ">
                 <li>
                   <a
-                    href="#"
+                    href="/delivery"
                     className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
                   >
                     Доставка і оплата
@@ -67,7 +67,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <a
-                    href="#"
+                    href="/warranty"
                     className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
                   >
                     Умови повернення та обміну
@@ -103,23 +103,34 @@ export default function Footer() {
 
           {/* Колонка 2: Графік роботи та умови */}
           <div>
-            <h3 className="text-lg font-bold text-[var(--brand-yellow-light)] mb-4 uppercase border-b-2 border-[#f4c430] inline-block pb-1">
+            <h3 className="text-lg font-bold text-[var(--brand-yellow-light)] uppercase border-b-2 border-[#f4c430] inline-block pb-1">
               Графік роботи
             </h3>
 
             <div>
-              <div className="mt-4 ml-8 space-y-2  text-sm text-[var(--brand-yellow-light)]/80">
+              <div className="my-4 ml-8 space-y-2  text-sm text-[var(--brand-yellow-light)]/80">
                 <p>
                   <span className="text-[var(--brand-yellow-light)] font-semibold">
                     Пн-Пт:
                   </span>{" "}
-                  8:00 - 21:00
+                  10:00 - 17:00
                 </p>
                 <p>
                   <span className="text-[var(--brand-yellow-light)] font-semibold">
                     Сб-Нд:
                   </span>{" "}
-                  8:00 - 21:00
+                  10:00 - 16:00
+                </p>
+              </div>
+              <div>
+                <h2 className="text-lg font-bold text-[var(--brand-yellow-light)]  uppercase  inline-block pb-1">
+                  Обробка заявок
+                </h2>
+                <p>
+                  <span className="ml-8 text-[var(--brand-yellow-light)] font-semibold">
+                    Пн-Нд:
+                  </span>{" "}
+                  10:00 - 21:00
                 </p>
               </div>
               <div className="flex items-start mt-4 gap-3">
@@ -128,8 +139,11 @@ export default function Footer() {
                   className="text-[var(--brand-yellow-light)] mt-1 flex-shrink-0"
                 />
                 <div className="text-sm">
-                  <p>м. Одеса, 65121</p>
-                  <p>Проспект Небесної Сотні 75/2</p>
+                  <p>м. Одеса, 65000</p>
+                  <p>
+                    Проспект Небесної Сотні 75/2,
+                    <br /> ринок Успіх, магазин 214
+                  </p>
                 </div>
               </div>
             </div>
@@ -154,19 +168,19 @@ export default function Footer() {
 
             <div className="space-y-3 text-[var(--brand-yellow-light)]/80">
               <a
-                href="tel:+380730000058"
+                href="tel:+380983928740"
                 className="flex items-center gap-3 hover:text-[var(--brand-yellow-light)] transition-colors"
               >
                 <Phone size={18} className="text-[var(--brand-yellow-light)]" />
-                <span>+38 073 000-00-58</span>
+                <span>+38 098 392-87-40</span>
               </a>
-              <a
+              {/* <a
                 href="tel:+380680805858"
                 className="flex items-center gap-3 hover:text-[var(--brand-yellow-light)] transition-colors"
               >
                 <Phone size={18} className="text-[var(--brand-yellow-light)]" />
                 <span>+38 068 080-58-58</span>
-              </a>
+              </a> */}
 
               <div className="flex gap-3">
                 <a
@@ -177,19 +191,19 @@ export default function Footer() {
                   <Send size={18} className="text-primary-foreground" />
                 </a>
                 <a
-                  href="tel:+380730000058"
+                  href="tel:+380983928740"
                   className="w-10 h-10 bg-[var(--brand-yellow-light)] rounded-full flex items-center justify-center hover:bg-primary hover:text-secondary transition-colors"
                   aria-label="Viber"
                 >
                   <MessageCircle size={18} className="text-secondary" />
                 </a>
-                <a
+                {/* <a
                   href="tel:+380730000058"
                   className="w-10 h-10 bg-[var(--brand-yellow-light)] rounded-full flex items-center justify-center hover:bg-primary transition-colors"
                   aria-label="WhatsApp"
                 >
                   <MessageCircle size={18} className="text-secondary" />
-                </a>
+                </a> */}
               </div>
 
               <a
