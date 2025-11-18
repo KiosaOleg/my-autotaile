@@ -144,7 +144,7 @@ export default function PartsRequestForm() {
 
                 <button
                   type="submit"
-                  className="w-full bg-[var(--secondary)] hover:bg-[var(--brand-black-soft)] text-[var(--secondary-foreground)] font-semibold py-4 rounded-full shadow-lg transition-all flex items-center justify-center gap-2 uppercase tracking-wide"
+                  className="cursor-pointer w-full bg-[var(--secondary)] hover:bg-[var(--brand-black-soft)] text-[var(--secondary-foreground)] font-semibold py-4 rounded-full shadow-lg transition-all flex items-center justify-center gap-2 uppercase tracking-wide"
                 >
                   <Send size={20} />
                   Відправити заявку
