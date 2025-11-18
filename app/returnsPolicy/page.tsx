@@ -52,9 +52,9 @@ export default function ReturnsPolicyPage() {
               className="rounded-3xl border border-border bg-card/80 p-6 shadow-sm space-y-4"
             >
               <div className="flex items-center gap-4">
-                <span className="text-3xl font-bold text-secondary">
+                {/* <span className="text-3xl font-bold text-secondary">
                   {card.id}
-                </span>
+                </span> */}
                 <h2 className="text-xl font-semibold text-foreground">
                   {card.title}
                 </h2>

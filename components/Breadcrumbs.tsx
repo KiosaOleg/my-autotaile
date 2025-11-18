@@ -8,7 +8,8 @@ const labelMap: Record<string, string> = {
   about: "Про компанію",
   contacts: "Контакти",
   delivery: "Доставка і оплата",
-  warranty: "Умови повернення",
+  returnsPolicy: "Умови повернення",
+  warranty: "Гарантія",
 };
 
 export default function Breadcrumbs() {

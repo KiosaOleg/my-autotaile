@@ -2,14 +2,14 @@ import { MessageCircle } from "lucide-react";
 import { ThemeToggle } from "./theme-toggle";
 
 const topNavItems = [
+  { label: "Головна", href: "/" },
   { label: "Про компанію", href: "/about" },
   { label: "Контакти", href: "/contacts" },
   { label: "Доставка і оплата", href: "/delivery" },
-  { label: "Умови повернення", href: "/returns-policy" },
-  // { label: "Політика конфіденційності", href: "#" },
-  // { label: "Договір публічної оферти", href: "#" },
+  { label: "Умови повернення", href: "/returnsPolicy" },
+  { label: "Гарантія", href: "/warranty" },
 ];
-
+  
 export default function HeaderTop() {
   return (
     <div className="px-5 border-b border-(--border)/70 bg-(--background)/80">
