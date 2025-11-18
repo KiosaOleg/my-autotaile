@@ -7,13 +7,13 @@ export default function Footer() {
   return (
     <footer className="bg-gradient-to-br from-[#3a3a3a] via-[#2d2d2d] to-[#3a3a3a] text-[var(--brand-yellow-light)] border-t border-[#4a4a4a]/50">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 ">
           {/* Колонка 1: Інформація */}
           <div>
-            <h3 className="text-lg font-bold text-[var(--brand-yellow-light)]  uppercase  inline-block mb-1">
+            <h3 className="text-lg font-bold text-[var(--brand-yellow-light)] border-b-2 border-[#f4c430] mb-3 uppercase  inline-block pb-1">
               Інформація
             </h3>
-            <div className="flex justify-between gap-8  border-t-2 border-[#f4c430] pt-3">
+            <div className="flex justify-between  ">
               <ul className="space-y-2">
                 <li>
                   <a
@@ -31,32 +31,65 @@ export default function Footer() {
                     Контакти
                   </a>
                 </li>
-                <li>
+                {/* <li>
                   <a
                     href="#"
                     className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
                   >
                     Акції
                   </a>
-                </li>
-                <li>
+                </li> */}
+                {/* <li>
                   <a
                     href="#"
                     className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
                   >
                     Допомога (FAQ)
                   </a>
-                </li>
-                <li>
+                </li> */}
+                {/* <li>
                   <a
                     href="#"
                     className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
                   >
                     Кешбек і сертифікати
                   </a>
+                </li> */}
+                <li>
+                  <a
+                    href="/delivery"
+                    className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
+                  >
+                    Доставка і оплата
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/returnsPolicy"
+                    className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
+                  >
+                    Умови повернення та обміну
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
+                  >
+                    Гарантія
+                  </a>
+                </li>
+
+                <li>
+                  <a
+                    href="#"
+                    className="bg-primary px-3 py-1 rounded text-primary-foreground hover:bg-[var(--brand-yellow-light)] hover:text-secondary transition-colors inline-block"
+                  >
+                    Політика конфіденційності
+                  </a>
                 </li>
               </ul>
-              <ul className="space-y-2 ">
+              {/* <ul className="space-y-2 ">
                 <li>
                   <a
                     href="/delivery"
@@ -97,12 +130,12 @@ export default function Footer() {
                     Політика конфіденційності
                   </a>
                 </li>
-              </ul>
+              </ul> */}
             </div>
           </div>
 
           {/* Колонка 2: Графік роботи та умови */}
-          <div>
+          <div className="ml-0 mr-auto">
             <h3 className="text-lg font-bold text-[var(--brand-yellow-light)] uppercase border-b-2 border-[#f4c430] inline-block pb-1">
               Графік роботи
             </h3>
@@ -150,7 +183,7 @@ export default function Footer() {
           </div>
 
           {/* Колонка 3: Контакти та соцмережі */}
-          <div className="space-y-5">
+          <div className="space-y-5 ml-auto mr-4">
             <div className="flex items-center gap-3">
               <div className="relative w-14 h-14">
                 <Image
