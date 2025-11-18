@@ -5,7 +5,7 @@ const topNavItems = [
   { label: "Про компанію", href: "/about" },
   { label: "Контакти", href: "/contacts" },
   { label: "Доставка і оплата", href: "/delivery" },
-  { label: "Умови повернення", href: "/warranty" },
+  { label: "Умови повернення", href: "/returns-policy" },
   // { label: "Політика конфіденційності", href: "#" },
   // { label: "Договір публічної оферти", href: "#" },
 ];

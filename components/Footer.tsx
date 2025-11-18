@@ -67,7 +67,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <a
-                    href="/warranty"
+                    href="/returns-policy"
                     className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
                   >
                     Умови повернення та обміну
