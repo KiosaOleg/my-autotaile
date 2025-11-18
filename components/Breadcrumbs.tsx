@@ -7,6 +7,8 @@ import { ChevronRight, Warehouse } from "lucide-react";
 const labelMap: Record<string, string> = {
   about: "Про компанію",
   contacts: "Контакти",
+  delivery: "Доставка і оплата",
+  warranty: "Умови повернення",
 };
 
 export default function Breadcrumbs() {
@@ -29,12 +31,9 @@ export default function Breadcrumbs() {
       >
         <ChevronRight className="h-3.5 w-3.5 text-border" />
         {isLast ? (
-          <span className="text-foreground capitalize">{label}</span>
+          <span className="text-foreground ">{label}</span>
         ) : (
-          <Link
-            href={href}
-            className="hover:text-secondary capitalize transition-colors"
-          >
+          <Link href={href} className="hover:text-secondary  transition-colors">
             {label}
           </Link>
         )}
