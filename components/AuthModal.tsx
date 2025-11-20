@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { X, Mail, Lock, User, Phone } from "lucide-react";
+import { X, Mail, Lock, User, Phone, LogOut } from "lucide-react";
+import { isAuthenticated, removeAuthToken } from "@/lib/api";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -10,6 +11,8 @@ interface AuthModalProps {
 
 export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const [isLogin, setIsLogin] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -34,30 +37,67 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
       ...formData,
       [e.target.name]: e.target.value,
     });
+    setError(null); // Очищаємо помилку при зміні полів
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (isLogin) {
-      console.log("Login:", {
-        email: formData.email,
-        password: formData.password,
-      });
-      // Тут буде логіка входу
-    } else {
-      if (formData.password !== formData.confirmPassword) {
-        alert("Паролі не співпадають");
-        return;
+    setError(null);
+    setIsLoading(true);
+
+    try {
+      if (isLogin) {
+        // Логіка входу
+        const response = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: formData.email,
+            password: formData.password,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Помилка авторизації");
+        }
+
+        // Зберігаємо токен в localStorage
+        if (data.token) {
+          localStorage.setItem("auth_token", data.token);
+          // Можна також зберегти email для відображення
+          localStorage.setItem("user_email", formData.email);
+        }
+
+        // Закриваємо модалку після успішної авторизації
+        onClose();
+
+        // Оновлюємо сторінку або викликаємо callback для оновлення UI
+        // Замість window.location.reload() можна використати подію для оновлення стану
+        window.dispatchEvent(new Event("storage"));
+        // Або просто оновити сторінку
+        window.location.reload(); // або використайте більш елегантне рішення з контекстом
+      } else {
+        // Логіка реєстрації (якщо потрібна)
+        if (formData.password !== formData.confirmPassword) {
+          throw new Error("Паролі не співпадають");
+        }
+        // Тут буде логіка реєстрації через API
+        console.log("Register:", formData);
       }
-      console.log("Register:", formData);
-      // Тут буде логіка реєстрації
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Сталася помилка");
+    } finally {
+      setIsLoading(false);
     }
-    // Після успішної авторизації можна закрити модалку
-    // onClose();
   };
 
   const switchToRegister = () => {
     setIsLogin(false);
+    setError(null);
     setFormData({
       name: "",
       email: "",
@@ -69,6 +109,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
   const switchToLogin = () => {
     setIsLogin(true);
+    setError(null);
     setFormData({
       name: "",
       email: "",
@@ -111,6 +152,13 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
                 : "Створіть новий обліковий запис"}
             </p>
           </div>
+
+          {/* Error Message */}
+          {error && (
+            <div className="mb-4 p-3 bg-red-500/10 border border-red-500/50 rounded-xl text-red-500 text-sm">
+              {error}
+            </div>
+          )}
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -160,7 +208,8 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full pl-12 pr-4 py-3 border border-border rounded-xl bg-card text-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/30 transition-all"
+                  disabled={isLoading}
+                  className="w-full pl-12 pr-4 py-3 border border-border rounded-xl bg-card text-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/30 transition-all disabled:opacity-50"
                   placeholder="email@example.com або +38 (0XX) XXX-XX-XX"
                 />
               </div>
@@ -185,7 +234,8 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
                   value={formData.password}
                   onChange={handleChange}
                   required
-                  className="w-full pl-12 pr-4 py-3 border border-border rounded-xl bg-card text-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/30 transition-all"
+                  disabled={isLoading}
+                  className="w-full pl-12 pr-4 py-3 border border-border rounded-xl bg-card text-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/30 transition-all disabled:opacity-50"
                   placeholder="Введіть пароль"
                 />
               </div>
@@ -211,7 +261,8 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
                     value={formData.confirmPassword}
                     onChange={handleChange}
                     required={!isLogin}
-                    className="w-full pl-12 pr-4 py-3 border border-border rounded-xl bg-card text-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/30 transition-all"
+                    disabled={isLoading}
+                    className="w-full pl-12 pr-4 py-3 border border-border rounded-xl bg-card text-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/30 transition-all disabled:opacity-50"
                     placeholder="Повторіть пароль"
                   />
                 </div>
@@ -220,9 +271,14 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
             <button
               type="submit"
-              className="cursor-pointer w-full bg-secondary hover:bg-[var(--brand-black-soft)] text-secondary-foreground font-semibold py-4 rounded-full shadow-lg transition-all uppercase tracking-wide"
+              disabled={isLoading}
+              className="cursor-pointer w-full bg-secondary hover:bg-[var(--brand-black-soft)] text-secondary-foreground font-semibold py-4 rounded-full shadow-lg transition-all uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLogin ? "Увійти" : "Зареєструватися"}
+              {isLoading
+                ? "Завантаження..."
+                : isLogin
+                ? "Увійти"
+                : "Зареєструватися"}
             </button>
           </form>
 
@@ -235,7 +291,8 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
               <button
                 type="button"
                 onClick={isLogin ? switchToRegister : switchToLogin}
-                className="cursor-pointer text-secondary hover:text-primary font-semibold transition-colors"
+                disabled={isLoading}
+                className="cursor-pointer text-secondary hover:text-primary font-semibold transition-colors disabled:opacity-50"
               >
                 {isLogin ? "Зареєструватися" : "Увійти"}
               </button>

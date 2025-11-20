@@ -1,18 +1,62 @@
 "use client";
 
 import Image from "next/image";
-import { Search, User, ShoppingCart } from "lucide-react";
-import { useState } from "react";
+import { Search, User, ShoppingCart, LogOut } from "lucide-react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import AuthModal from "./AuthModal";
 import CartModal from "./CartModal";
+import { isAuthenticated, removeAuthToken } from "@/lib/api";
 
 export default function HeaderBottom() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
   // Потім замінити на реальну кількість з API/контексту
   const [cartItemsCount] = useState(3); // Приклад: 3 товари
+
+  // Перевіряємо статус авторизації при завантаженні та зміні стану
+  useEffect(() => {
+    const checkAuth = () => {
+      const authenticated = isAuthenticated();
+      setIsLoggedIn(authenticated);
+      if (authenticated) {
+        const email = localStorage.getItem("user_email");
+        setUserEmail(email);
+      } else {
+        setUserEmail(null);
+      }
+    };
+
+    // Перевіряємо при завантаженні
+    checkAuth();
+
+    // Слухаємо події збереження в localStorage (для оновлення після входу)
+    const handleStorageChange = () => {
+      checkAuth();
+    };
+
+    // Слухаємо зміни в localStorage
+    window.addEventListener("storage", handleStorageChange);
+
+    // Також перевіряємо періодично (на випадок, якщо зміни відбулися в тому ж вікні)
+    const interval = setInterval(checkAuth, 1000);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+      clearInterval(interval);
+    };
+  }, []);
+
+  const handleLogout = () => {
+    removeAuthToken();
+    setIsLoggedIn(false);
+    setUserEmail(null);
+    // Оновлюємо сторінку для оновлення UI
+    window.location.reload();
+  };
 
   return (
     <>
@@ -65,13 +109,32 @@ export default function HeaderBottom() {
 
             {/* Quick Icons */}
             <div className="flex items-center gap-3 lg:gap-4">
-              <button
-                onClick={() => setIsAuthModalOpen(true)}
-                className="cursor-pointer hidden lg:flex items-center gap-2 px-5 py-2.5 rounded-full border border-border text-sm font-medium text-secondary hover:border-primary hover:text-primary transition-colors"
-              >
-                <User size={18} />
-                Увійти
-              </button>
+              {isLoggedIn ? (
+                <div className="hidden lg:flex items-center gap-3">
+                  <div className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-border bg-card">
+                    <User size={18} className="text-secondary" />
+                    <span className="text-sm font-medium text-foreground">
+                      {userEmail || "Користувач"}
+                    </span>
+                  </div>
+                  <button
+                    onClick={handleLogout}
+                    className="cursor-pointer flex items-center gap-2 px-4 py-2.5 rounded-full border border-border text-sm font-medium text-secondary hover:border-primary hover:text-primary transition-colors"
+                    title="Вийти"
+                  >
+                    <LogOut size={18} />
+                    <span className="hidden xl:inline">Вийти</span>
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setIsAuthModalOpen(true)}
+                  className="cursor-pointer hidden lg:flex items-center gap-2 px-5 py-2.5 rounded-full border border-border text-sm font-medium text-secondary hover:border-primary hover:text-primary transition-colors"
+                >
+                  <User size={18} />
+                  Увійти
+                </button>
+              )}
               <button
                 onClick={() => setIsCartModalOpen(true)}
                 className="cursor-pointer w-11 h-11 flex items-center justify-center rounded-full border border-border text-secondary hover:border-primary hover:text-primary transition-colors relative"
