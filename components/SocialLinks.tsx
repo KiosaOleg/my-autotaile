@@ -1,7 +1,6 @@
 "use client";
 
-import TikTokIcon from "@/public/TikTokIcon";
-import { Instagram, Send, Youtube } from "lucide-react";
+import { Instagram, Send, Facebook, Youtube } from "lucide-react";
 
 interface SocialLink {
   name: string;
@@ -14,30 +13,30 @@ const socialLinks: SocialLink[] = [
   {
     name: "Telegram",
     icon: Send,
-    href: "https://t.me/kichuk_auto",
+    href: "#",
     color:
       "bg-[var(--primary)] hover:bg-[var(--brand-yellow-light)] text-[var(--primary-foreground)]",
   },
   {
-    name: "TikTok",
-    icon: TikTokIcon,
-    href: "https://www.tiktok.com/@kichuk_auto?_r=1&_t=ZS-91OK70ojHQD",
-    color:
-      "bg-[var(--secondary)] hover:bg-[var(--brand-yellow-light)] text-[var(--secondary-foreground)]",
-  },
-  {
     name: "Instagram",
     icon: Instagram,
-    href: "https://www.instagram.com/kichuk_auto?igsh=Nm81NnI0Z2M4MjRv&utm_source=qr",
+    href: "#",
     color:
-      "bg-[var(--secondary)] hover:bg-[var(--brand-yellow-light)] text-[var(--secondary-foreground)]",
+      "bg-[var(--secondary)] hover:bg-[var(--brand-black-soft)] text-[var(--secondary-foreground)]",
+  },
+  {
+    name: "Facebook",
+    icon: Facebook,
+    href: "#",
+    color:
+      "bg-[var(--secondary-foreground)] hover:bg-[var(--brand-yellow-light)] text-[var(--secondary)]",
   },
   {
     name: "YouTube",
     icon: Youtube,
-    href: "https://youtube.com/@kichuk_auto?si=jyGL2thuvCd2BUfG",
+    href: "#",
     color:
-      "bg-[var(--brand-yellow-dark)] hover:bg-[var(--brand-yellow-light)] text-[var(--primary-foreground)]",
+      "bg-[var(--brand-yellow-dark)] hover:bg-[var(--secondary)] text-[var(--primary-foreground)]",
   },
 ];
 

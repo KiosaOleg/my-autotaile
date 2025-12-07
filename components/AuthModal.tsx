@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { X, Mail, Lock, User, Phone, LogOut } from "lucide-react";
-import { isAuthenticated, removeAuthToken } from "@/lib/api";
+import { isAuthenticated, removeAuthToken, setAuthData } from "@/lib/api";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -62,31 +62,48 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
         const data = await response.json();
 
         if (!response.ok) {
-          throw new Error(data.error || "Помилка авторизації");
+          // Обробка різних типів помилок
+          let errorMessage = data.error || "Помилка авторизації";
+
+          if (response.status === 412) {
+            errorMessage =
+              data.error ||
+              "Некоректні дані користувача. Перевірте коректність введених даних і спробуйте ще раз.";
+          } else if (response.status === 401) {
+            errorMessage = data.error || "Помилка авторизації";
+          }
+
+          throw new Error(errorMessage);
         }
 
-        // Зберігаємо токен в localStorage
-        if (data.token) {
-          localStorage.setItem("auth_token", data.token);
-          // Можна також зберегти email для відображення
-          localStorage.setItem("user_email", formData.email);
+        // Зберігаємо всі дані авторизації
+        if (data.token && data.refresh_token) {
+          setAuthData({
+            token: data.token,
+            refresh_token: data.refresh_token,
+            expires_at: data.expires_at,
+            browser_fingerprint: data.browser_fingerprint,
+            user_email: formData.email,
+          });
         }
 
         // Закриваємо модалку після успішної авторизації
         onClose();
 
-        // Оновлюємо сторінку або викликаємо callback для оновлення UI
-        // Замість window.location.reload() можна використати подію для оновлення стану
+        // Оновлюємо сторінку
         window.dispatchEvent(new Event("storage"));
-        // Або просто оновити сторінку
-        window.location.reload(); // або використайте більш елегантне рішення з контекстом
+        window.location.reload();
       } else {
-        // Логіка реєстрації (якщо потрібна)
+        // Логіка реєстрації
         if (formData.password !== formData.confirmPassword) {
           throw new Error("Паролі не співпадають");
         }
-        // Тут буде логіка реєстрації через API
-        console.log("Register:", formData);
+
+        // API Unic Tread не підтримує реєстрацію через API
+        // Показуємо повідомлення користувачу
+        throw new Error(
+          "Реєстрація через API недоступна. Будь ласка, зверніться до адміністратора для створення облікового запису."
+        );
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Сталася помилка");

@@ -7,236 +7,207 @@ export default function Footer() {
   return (
     <footer className="bg-gradient-to-br from-[#3a3a3a] via-[#2d2d2d] to-[#3a3a3a] text-[var(--brand-yellow-light)] border-t border-[#4a4a4a]/50">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 ">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Колонка 1: Інформація */}
           <div>
-            <h3 className="text-lg font-bold text-[var(--brand-yellow-light)] border-b-2 border-[#f4c430] mb-3 uppercase  inline-block pb-1">
+            <h3 className="text-lg font-bold text-[var(--brand-yellow-light)] mb-4 uppercase">
               Інформація
             </h3>
-            <div className="flex justify-between  ">
-              <ul className="space-y-2">
-                <li>
-                  <a
-                    href="/about"
-                    className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
-                  >
-                    Про компанію
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/contacts"
-                    className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
-                  >
-                    Контакти
-                  </a>
-                </li>
-                {/* <li>
-                  <a
-                    href="#"
-                    className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
-                  >
-                    Акції
-                  </a>
-                </li> */}
-                {/* <li>
-                  <a
-                    href="#"
-                    className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
-                  >
-                    Допомога (FAQ)
-                  </a>
-                </li> */}
-                {/* <li>
-                  <a
-                    href="#"
-                    className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
-                  >
-                    Кешбек і сертифікати
-                  </a>
-                </li> */}
-                <li>
-                  <a
-                    href="/delivery"
-                    className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
-                  >
-                    Доставка і оплата
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/returnsPolicy"
-                    className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
-                  >
-                    Умови повернення та обміну
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
-                  >
-                    Гарантія
-                  </a>
-                </li>
-
-                <li>
-                  <a
-                    href="#"
-                    className="bg-primary px-3 py-1 rounded text-primary-foreground hover:bg-[var(--brand-yellow-light)] hover:text-secondary transition-colors inline-block"
-                  >
-                    Політика конфіденційності
-                  </a>
-                </li>
-              </ul>
-              {/* <ul className="space-y-2 ">
-                <li>
-                  <a
-                    href="/delivery"
-                    className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
-                  >
-                    Доставка і оплата
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/returnsPolicy"
-                    className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
-                  >
-                    Умови повернення та обміну
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
-                  >
-                    Гарантія
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
-                  >
-                    Договір публічної оферти
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="bg-primary px-3 py-1 rounded text-primary-foreground hover:bg-[var(--brand-yellow-light)] hover:text-secondary transition-colors inline-block"
-                  >
-                    Політика конфіденційності
-                  </a>
-                </li>
-              </ul> */}
-            </div>
+            <ul className="space-y-2">
+              <li>
+                <a
+                  href="#"
+                  className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
+                >
+                  Про компанію
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
+                >
+                  Контакти
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
+                >
+                  Акції
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
+                >
+                  Допомога (FAQ)
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
+                >
+                  Кешбек і сертифікати
+                </a>
+              </li>
+            </ul>
           </div>
 
           {/* Колонка 2: Графік роботи та умови */}
-          <div className="ml-0 mr-auto">
-            <h3 className="text-lg font-bold text-[var(--brand-yellow-light)] uppercase border-b-2 border-[#f4c430] inline-block pb-1">
+          <div>
+            <h3 className="text-lg font-bold text-[var(--brand-yellow-light)] mb-4 uppercase">
               Графік роботи
             </h3>
+            <ul className="space-y-2 mb-6">
+              <li>
+                <a
+                  href="#"
+                  className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
+                >
+                  Доставка і оплата
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
+                >
+                  Умови повернення та обміну
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
+                >
+                  Гарантія
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-[var(--brand-yellow-light)]/80 hover:text-[var(--brand-yellow-light)] transition-colors"
+                >
+                  Договір публічної оферти
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="bg-primary px-3 py-1 rounded text-primary-foreground hover:bg-[var(--brand-yellow-light)] hover:text-secondary transition-colors inline-block"
+                >
+                  Політика конфіденційності
+                </a>
+              </li>
+            </ul>
 
-            <div>
-              <div className="my-4 ml-8 space-y-2  text-sm text-[var(--brand-yellow-light)]/80">
+            <div className="border-t border-[#4a4a4a]/50 pt-4">
+              <div className="space-y-1 text-sm text-[var(--brand-yellow-light)]/80">
                 <p>
                   <span className="text-[var(--brand-yellow-light)] font-semibold">
                     Пн-Пт:
                   </span>{" "}
-                  10:00 - 17:00
+                  8:00 - 21:00
                 </p>
                 <p>
                   <span className="text-[var(--brand-yellow-light)] font-semibold">
                     Сб-Нд:
                   </span>{" "}
-                  10:00 - 16:00
+                  8:00 - 21:00
                 </p>
-              </div>
-              <div>
-                <h2 className="text-lg font-bold text-[var(--brand-yellow-light)]  uppercase  inline-block pb-1">
-                  Обробка заявок
-                </h2>
-                <p>
-                  <span className="ml-8 text-[var(--brand-yellow-light)] font-semibold">
-                    Пн-Нд:
-                  </span>{" "}
-                  10:00 - 21:00
-                </p>
-              </div>
-              <div className="flex items-start mt-4 gap-3">
-                <MapPin
-                  size={20}
-                  className="text-[var(--brand-yellow-light)] mt-1 flex-shrink-0"
-                />
-                <div className="text-sm">
-                  <p>м. Одеса, 65000</p>
-                  <p>
-                    Проспект Небесної Сотні 75/2,
-                    <br /> ринок Успіх, магазин 214
-                  </p>
-                </div>
               </div>
             </div>
           </div>
 
           {/* Колонка 3: Контакти та соцмережі */}
-          <div className="space-y-5 ml-auto mr-4">
-            <div className="flex items-center gap-3">
-              <div className="relative w-14 h-14">
-                <Image
-                  src="/logo.jpg"
-                  alt="Kichuk Auto logo"
-                  fill
-                  sizes="64px"
-                  className="object-contain"
-                />
+          <div>
+            <div className="mb-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="relative w-16 h-16">
+                  <Image
+                    src="/logo.jpg"
+                    alt="Kichuk Auto logo"
+                    fill
+                    sizes="64px"
+                    className="object-contain"
+                  />
+                </div>
+                <span className="text-2xl font-bold text-[var(--brand-yellow-light)]">
+                  KICHUK AUTO
+                </span>
               </div>
-              <span className="text-2xl font-bold text-[var(--brand-yellow-light)]">
-                KICHUK AUTOPARTS
-              </span>
             </div>
 
-            <div className="space-y-3 text-[var(--brand-yellow-light)]/80">
-              <a
-                href="tel:+380983928740"
-                className="flex items-center gap-3 hover:text-[var(--brand-yellow-light)] transition-colors"
-              >
-                <Phone size={18} className="text-[var(--brand-yellow-light)]" />
-                <span>+38 098 392-87-40</span>
-              </a>
-              {/* <a
-                href="tel:+380680805858"
-                className="flex items-center gap-3 hover:text-[var(--brand-yellow-light)] transition-colors"
-              >
-                <Phone size={18} className="text-[var(--brand-yellow-light)]" />
-                <span>+38 068 080-58-58</span>
-              </a> */}
+            <div className="space-y-4 text-[var(--brand-yellow-light)]/80">
+              <div className="flex items-start gap-3">
+                <MapPin
+                  size={20}
+                  className="text-[var(--brand-yellow-light)] mt-1 flex-shrink-0"
+                />
+                <div className="text-sm">
+                  <p>м. Одеса, 65121</p>
+                  <p>Проспект Небесної Сотні 75/2</p>
+                </div>
+              </div>
 
-              <div className="flex gap-3">
+              <div className="space-y-2">
+                <a
+                  href="tel:+380730000058"
+                  className="flex items-center gap-3 hover:text-[var(--brand-yellow-light)] transition-colors"
+                >
+                  <Phone
+                    size={18}
+                    className="text-[var(--brand-yellow-light)]"
+                  />
+                  <span>+38 073 000-00-58</span>
+                </a>
+                <a
+                  href="tel:+380680805858"
+                  className="flex items-center gap-3 hover:text-[var(--brand-yellow-light)] transition-colors"
+                >
+                  <Phone
+                    size={18}
+                    className="text-[var(--brand-yellow-light)]"
+                  />
+                  <span>+38 068 080-58-58</span>
+                </a>
+              </div>
+
+              <div className="flex items-center gap-3">
                 <a
                   href="tel:+380730000058"
                   className="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-[var(--brand-yellow-light)] hover:text-secondary transition-colors"
                   aria-label="Telegram"
                 >
-                  <Send size={18} className="text-primary-foreground" />
+                  <Send
+                    size={18}
+                    className="text-primary-foreground"
+                  />
                 </a>
                 <a
-                  href="tel:+380983928740"
+                  href="tel:+380730000058"
                   className="w-10 h-10 bg-[var(--brand-yellow-light)] rounded-full flex items-center justify-center hover:bg-primary hover:text-secondary transition-colors"
                   aria-label="Viber"
                 >
-                  <MessageCircle size={18} className="text-secondary" />
+                  <MessageCircle
+                    size={18}
+                    className="text-secondary"
+                  />
                 </a>
-                {/* <a
+                <a
                   href="tel:+380730000058"
                   className="w-10 h-10 bg-[var(--brand-yellow-light)] rounded-full flex items-center justify-center hover:bg-primary transition-colors"
                   aria-label="WhatsApp"
                 >
-                  <MessageCircle size={18} className="text-secondary" />
-                </a> */}
+                  <MessageCircle
+                    size={18}
+                    className="text-secondary"
+                  />
+                </a>
               </div>
 
               <a

@@ -23,7 +23,7 @@ export default function PartsRequestButton() {
             </p>
             <button
               onClick={() => setIsModalOpen(true)}
-              className="cursor-pointer bg-primary hover:bg-[var(--brand-yellow-light)] text-primary-foreground font-bold py-4 px-8 rounded-full shadow-lg hover:shadow-xl transition-all uppercase tracking-wide text-lg"
+              className="bg-primary hover:bg-[var(--brand-yellow-light)] text-primary-foreground font-bold py-4 px-8 rounded-full shadow-lg hover:shadow-xl transition-all uppercase tracking-wide text-lg"
             >
               Залишити контакт
             </button>

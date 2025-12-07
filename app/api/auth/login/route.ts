@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Генеруємо browser_fingerprint (можна використати MD5 або просто унікальний рядок)
+    // Генеруємо browser_fingerprint (зберігаємо для подальшого використання)
     const browserFingerprint = `web-${Date.now()}-${Math.random()
       .toString(36)
       .substring(7)}`;
@@ -30,18 +30,46 @@ export async function POST(request: NextRequest) {
       }),
     });
 
-    const data = await response.json();
-
+    // Обробка помилок згідно з документацією
     if (!response.ok) {
+      let errorData;
+      try {
+        errorData = await response.json();
+      } catch {
+        errorData = { message: "Помилка сервера" };
+      }
+
+      // 412 - некоректні дані користувача
+      if (response.status === 412) {
+        return NextResponse.json(
+          {
+            error:
+              errorData.message ||
+              "Некоректні дані користувача. Перевірте коректність введених даних і спробуйте ще раз.",
+            code: 412,
+          },
+          { status: 412 }
+        );
+      }
+
+      // 401 - інші помилки авторизації
       return NextResponse.json(
-        { error: data.message || "Помилка авторизації" },
+        {
+          error: errorData.message || errorData.error || "Помилка авторизації",
+          code: response.status,
+        },
         { status: response.status }
       );
     }
 
-    // Повертаємо токен клієнту
+    const data = await response.json();
+
+    // Повертаємо всі дані з API
     return NextResponse.json({
       token: data.token,
+      refresh_token: data.refresh_token,
+      expires_at: data.expires_at,
+      browser_fingerprint: browserFingerprint, // Зберігаємо для refresh
       success: true,
     });
   } catch (error) {

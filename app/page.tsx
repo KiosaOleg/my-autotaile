@@ -8,7 +8,7 @@ import PartsRequestForm from "@/components/PartsRequestForm";
 
 export default function Home() {
   return (
-    <main className="min-h-screen mx-4">
+    <main className="min-h-screen">
       <div className="flex flex-col gap-16 mb-16">
         {/* Герой банер */}
         <BannerCarousel />
@@ -28,6 +28,9 @@ export default function Home() {
         {/* Додаткова кнопка для форми */}
         <PartsRequestForm />
       </div>
+
+      {/* Підвал */}
+      <Footer />
     </main>
   );
 }

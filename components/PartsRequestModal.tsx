@@ -87,7 +87,7 @@ export default function PartsRequestModal({
             {/* Close Button */}
             <button
               onClick={onClose}
-              className="cursor-pointer absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full border border-border text-secondary hover:border-primary hover:text-primary transition-colors"
+              className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full border border-border text-secondary hover:border-primary hover:text-primary transition-colors"
               aria-label="Закрити"
             >
               <X size={20} />
@@ -182,7 +182,7 @@ export default function PartsRequestModal({
 
               <button
                 type="submit"
-                className="cursor-pointer w-full bg-secondary hover:bg-[var(--brand-black-soft)] text-secondary-foreground font-semibold py-4 rounded-full shadow-lg transition-all flex items-center justify-center gap-2 uppercase tracking-wide"
+                className="w-full bg-secondary hover:bg-[var(--brand-black-soft)] text-secondary-foreground font-semibold py-4 rounded-full shadow-lg transition-all flex items-center justify-center gap-2 uppercase tracking-wide"
               >
                 <Send size={20} />
                 Відправити заявку

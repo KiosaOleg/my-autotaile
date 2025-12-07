@@ -2,9 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
-import { ThemeProvider } from "@/components/theme-provider";
-import Footer from "@/components/Footer";
-import Breadcrumbs from "@/components/Breadcrumbs";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,8 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Kichuk Auto — автозапчастини",
-  description:
-    "Kichuk Auto: інтернет-магазин оригінальних та аналогових автозапчастин",
+  description: "Kichuk Auto: інтернет-магазин оригінальних та аналогових автозапчастин",
 };
 
 export default function RootLayout({
@@ -28,21 +24,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="uk" suppressHydrationWarning>
+    <html lang="uk">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Header />
-          <Breadcrumbs />
-          {children}
-          <Footer />
-        </ThemeProvider>
+        <Header />
+        {children}
       </body>
     </html>
   );
