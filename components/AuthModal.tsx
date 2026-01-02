@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { X, Mail, Lock, User, Phone, LogOut } from "lucide-react";
-import { isAuthenticated, removeAuthToken, setAuthData } from "@/lib/api";
+// Auth functionality removed - will be replaced with Prisma-based auth
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -46,65 +46,8 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
     setIsLoading(true);
 
     try {
-      if (isLogin) {
-        // Логіка входу
-        const response = await fetch("/api/auth/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: formData.email,
-            password: formData.password,
-          }),
-        });
-
-        const data = await response.json();
-
-        if (!response.ok) {
-          // Обробка різних типів помилок
-          let errorMessage = data.error || "Помилка авторизації";
-
-          if (response.status === 412) {
-            errorMessage =
-              data.error ||
-              "Некоректні дані користувача. Перевірте коректність введених даних і спробуйте ще раз.";
-          } else if (response.status === 401) {
-            errorMessage = data.error || "Помилка авторизації";
-          }
-
-          throw new Error(errorMessage);
-        }
-
-        // Зберігаємо всі дані авторизації
-        if (data.token && data.refresh_token) {
-          setAuthData({
-            token: data.token,
-            refresh_token: data.refresh_token,
-            expires_at: data.expires_at,
-            browser_fingerprint: data.browser_fingerprint,
-            user_email: formData.email,
-          });
-        }
-
-        // Закриваємо модалку після успішної авторизації
-        onClose();
-
-        // Оновлюємо сторінку
-        window.dispatchEvent(new Event("storage"));
-        window.location.reload();
-      } else {
-        // Логіка реєстрації
-        if (formData.password !== formData.confirmPassword) {
-          throw new Error("Паролі не співпадають");
-        }
-
-        // API Unic Tread не підтримує реєстрацію через API
-        // Показуємо повідомлення користувачу
-        throw new Error(
-          "Реєстрація через API недоступна. Будь ласка, зверніться до адміністратора для створення облікового запису."
-        );
-      }
+      // TODO: Implement authentication with Prisma
+      setError("Авторизація налаштовується. Будь ласка, спробуйте пізніше.");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Сталася помилка");
     } finally {

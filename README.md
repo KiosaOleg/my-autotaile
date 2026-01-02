@@ -2,21 +2,98 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 20.16+
+- SSH доступ до сервера `212.162.152.33`
+- Git Bash (для Windows) або WSL
+
+### Database Setup (SSH Tunnel)
+
+Цей проект використовує SSH тунель для безпечного підключення до MySQL бази даних.
+
+#### 1. Налаштуйте .env файл
+
+```bash
+cp .env.example .env
+```
+
+Відредагуйте `.env` та встановіть правильний пароль:
+
+```
+DATABASE_URL="mysql://my-autotaile_vercel_app:wW4kW2rX4e@127.0.0.1:3307/database2024"
+```
+
+#### 2. Запустіть SSH тунель
+
+**Варіант A: Через npm скрипт (Git Bash)**
+
+```bash
+npm run db:tunnel
+```
+
+**Варіант B: Вручну (Git Bash / WSL / Linux / macOS)**
+
+```bash
+ssh -N -L 3307:127.0.0.1:3306 root@212.162.152.33
+```
+
+**Варіант C: PowerShell (якщо встановлений SSH)**
+
+```powershell
+.\scripts\ssh-tunnel.ps1
+```
+
+⚠️ **Важливо:** Залиште термінал з SSH тунелем відкритим під час роботи з базою даних!
+
+#### 3. У новому терміналі - налаштуйте Prisma
+
+```bash
+# Підключитися до БД та отримати структуру таблиць
+npm run db:pull
+
+# Згенерувати Prisma Client
+npm run db:generate
+
+# Або обидві команди разом
+npm run db:setup
+```
+
+#### 4. Запустіть dev сервер
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Prisma Commands
+
+```bash
+# Підключитися до БД та отримати структуру
+npm run db:pull
+
+# Згенерувати Prisma Client
+npm run db:generate
+
+# Відкрити Prisma Studio (GUI для БД)
+npm run db:studio
+
+# Налаштувати все одразу
+npm run db:setup
+```
+
+### Architecture
+
+```
+Prisma (local)
+  ↓
+localhost:3307
+  ↓ (SSH tunnel)
+212.162.152.33:3306 (MySQL)
+```
+
+Prisma не знає про SSH тунель — для нього це локальна БД на `127.0.0.1:3307`.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 

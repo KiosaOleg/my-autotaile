@@ -5,28 +5,12 @@ import { Search, User, ShoppingCart } from "lucide-react";
 import { useState, useEffect } from "react";
 import CartModal from "./CartModal";
 import AuthModal from "./AuthModal";
-import { isAuthenticated, removeAuthToken } from "@/lib/api";
+// Auth functionality removed
 
 export default function HeaderBottom() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
-  const [authenticated, setAuthenticated] = useState(false);
-
-  // Перевіряємо авторизацію при завантаженні та зміні стану
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setAuthenticated(isAuthenticated());
-      
-      // Слухаємо зміни в localStorage
-      const handleStorageChange = () => {
-        setAuthenticated(isAuthenticated());
-      };
-      
-      window.addEventListener("storage", handleStorageChange);
-      return () => window.removeEventListener("storage", handleStorageChange);
-    }
-  }, []);
 
   return (
     <div className="sticky top-0 z-40 border-b border-(--border)/70 bg-background shadow-sm">
@@ -75,28 +59,14 @@ export default function HeaderBottom() {
 
           {/* Quick Icons */}
           <div className="flex items-center gap-3 lg:gap-4">
-            {authenticated ? (
-              <button 
-                onClick={() => {
-                  removeAuthToken();
-                  setAuthenticated(false);
-                  window.location.reload();
-                }}
-                className="hidden lg:flex items-center gap-2 px-5 py-2.5 rounded-full border border-border text-sm font-medium text-secondary hover:border-primary hover:text-primary transition-colors"
-              >
-                <User size={18} />
-                Вийти
-              </button>
-            ) : (
-              <button 
-                onClick={() => setIsAuthOpen(true)}
-                className="hidden lg:flex items-center gap-2 px-5 py-2.5 rounded-full border border-border text-sm font-medium text-secondary hover:border-primary hover:text-primary transition-colors"
-              >
-                <User size={18} />
-                Увійти
-              </button>
-            )}
-            <button 
+            <button
+              onClick={() => setIsAuthOpen(true)}
+              className="hidden lg:flex items-center gap-2 px-5 py-2.5 rounded-full border border-border text-sm font-medium text-secondary hover:border-primary hover:text-primary transition-colors"
+            >
+              <User size={18} />
+              Увійти
+            </button>
+            <button
               onClick={() => setIsCartOpen(true)}
               className="w-11 h-11 flex items-center justify-center rounded-full border border-border text-secondary hover:border-primary hover:text-primary transition-colors relative"
             >
@@ -111,18 +81,9 @@ export default function HeaderBottom() {
 
       {/* Cart Modal */}
       <CartModal isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
-      
+
       {/* Auth Modal */}
-      <AuthModal 
-        isOpen={isAuthOpen} 
-        onClose={() => {
-          setIsAuthOpen(false);
-          // Оновлюємо стан авторизації після закриття модалки
-          if (typeof window !== "undefined") {
-            setAuthenticated(isAuthenticated());
-          }
-        }} 
-      />
+      <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} />
     </div>
   );
 }

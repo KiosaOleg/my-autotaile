@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { apiRequest, isAuthenticated } from "@/lib/api";
 
 export interface Product {
   id: number;
@@ -21,24 +20,14 @@ interface ProductsResponse {
  * Хук для отримання популярних товарів
  */
 export function usePopularProducts() {
-  const authenticated = isAuthenticated();
-
   return useQuery({
     queryKey: ["products", "popular"],
     queryFn: async (): Promise<Product[]> => {
-      // Перевіряємо, чи користувач авторизований
-      if (!authenticated) {
-        throw new Error("Не авторизовано. Будь ласка, увійдіть у систему.");
-      }
-
-      const response = await apiRequest("products/popular", {
+      const response = await fetch("/api/products/popular", {
         method: "GET",
       });
 
       if (!response.ok) {
-        if (response.status === 401) {
-          throw new Error("Не авторизовано. Будь ласка, увійдіть у систему.");
-        }
         const error = await response.json();
         throw new Error(error.error || "Помилка завантаження товарів");
       }
@@ -50,12 +39,7 @@ export function usePopularProducts() {
 
       return products;
     },
-    enabled: authenticated, // Запит виконується тільки якщо користувач авторизований
-    retry: (failureCount, error) => {
-      // Не повторюємо запит при помилці авторизації
-      if (error instanceof Error && error.message.includes("Не авторизовано")) {
-        return false;
-      }
+    retry: (failureCount) => {
       return failureCount < 2;
     },
   });
