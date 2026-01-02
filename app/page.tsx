@@ -7,6 +7,10 @@ import Footer from "@/components/Footer";
 import PartsRequestForm from "@/components/PartsRequestForm";
 import FeaturedPart from "@/components/FeaturedPart";
 
+// Забороняємо SSG - сторінка буде рендеритися динамічно на runtime
+// Це необхідно, оскільки FeaturedPart робить Prisma запит до БД
+export const dynamic = "force-dynamic";
+
 export default function Home() {
   // ID деталі для відображення (можна змінити на будь-який існуючий ID)
   const featuredPartId = 1;
