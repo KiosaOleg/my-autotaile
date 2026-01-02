@@ -5,8 +5,12 @@ import PopularProducts from "@/components/PopularProducts";
 import SocialLinks from "@/components/SocialLinks";
 import Footer from "@/components/Footer";
 import PartsRequestForm from "@/components/PartsRequestForm";
+import FeaturedPart from "@/components/FeaturedPart";
 
 export default function Home() {
+  // ID деталі для відображення (можна змінити на будь-який існуючий ID)
+  const featuredPartId = 1;
+
   return (
     <main className="min-h-screen">
       <div className="flex flex-col gap-16 mb-16">
@@ -18,6 +22,9 @@ export default function Home() {
 
         {/* Інформаційний блок */}
         <TextBlock />
+
+        {/* Рекомендована деталь з БД */}
+        <FeaturedPart partId={featuredPartId} />
 
         {/* Популярні товари */}
         <PopularProducts />
