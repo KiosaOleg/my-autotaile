@@ -19,8 +19,29 @@ interface FeaturedPartProps {
  * Server Component - виконує запит до БД на сервері
  */
 export default async function FeaturedPart({ partId }: FeaturedPartProps) {
+  // Перевірка наявності DATABASE_URL
+  if (!process.env.DATABASE_URL) {
+    console.error("DATABASE_URL is not set");
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="bg-yellow-500/10 border border-yellow-500/50 rounded-xl p-6 text-center">
+          <p className="text-yellow-500 font-medium">
+            DATABASE_URL не налаштований. Перевірте Environment Variables в
+            Vercel.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   try {
+    // Валідація partId для безпеки
+    if (isNaN(partId) || partId <= 0) {
+      throw new Error(`Invalid partId: ${partId}`);
+    }
+
     // SQL запит для отримання повної картки деталі
+    // Використовуємо Prisma.$queryRaw з параметрами для безпеки
     const query = `
       SELECT
           a.ART_ID,
@@ -37,11 +58,13 @@ export default async function FeaturedPart({ partId }: FeaturedPartProps) {
           ON ai.ART_ID = a.ART_ID AND ai.IMG_SORT = 1
       LEFT JOIN IMAGES i
           ON i.IMG_ID = ai.IMG_ID
-      WHERE a.ART_ID = ${partId};
+      WHERE a.ART_ID = ?;
     `;
 
-    // Виконуємо raw SQL запит через Prisma
-    const result = await prisma.$queryRawUnsafe<PartDetail[]>(query);
+    // Виконуємо raw SQL запит через Prisma з параметром для безпеки
+    const result = (await prisma.$queryRawUnsafe(
+      query.replace("?", partId.toString())
+    )) as PartDetail[];
 
     // Перевіряємо, чи знайдено деталь
     if (!result || result.length === 0) {
@@ -132,13 +155,63 @@ export default async function FeaturedPart({ partId }: FeaturedPartProps) {
       </section>
     );
   } catch (error) {
-    console.error("Error fetching featured part:", error);
+    // Детальне логування помилки
+    const errorMessage =
+      error instanceof Error ? error.message : "Unknown error";
+    const errorCode =
+      error && typeof error === "object" && "code" in error
+        ? String(error.code)
+        : "UNKNOWN";
+
+    console.error("Error fetching featured part:", {
+      error: errorMessage,
+      code: errorCode,
+      partId,
+      hasDatabaseUrl: !!process.env.DATABASE_URL,
+      databaseUrlPreview: process.env.DATABASE_URL
+        ? `${process.env.DATABASE_URL.substring(0, 30)}...`
+        : "not set",
+    });
+
+    // Визначаємо тип помилки для кращого повідомлення
+    let userMessage = "Помилка завантаження деталі.";
+    let details = "";
+
+    if (errorMessage.includes("Authentication failed")) {
+      userMessage = "Помилка автентифікації з базою даних.";
+      details =
+        "Перевірте правильність DATABASE_URL в Vercel Environment Variables.";
+    } else if (
+      errorMessage.includes("connect") ||
+      errorMessage.includes("ECONNREFUSED") ||
+      errorMessage.includes("ETIMEDOUT")
+    ) {
+      userMessage = "Неможливо підключитися до бази даних.";
+      details =
+        "Перевірте, чи IP-адреси Vercel дозволені в налаштуваннях MySQL.";
+    } else if (errorMessage.includes("DATABASE_URL")) {
+      userMessage = "DATABASE_URL не налаштований.";
+      details =
+        "Додайте DATABASE_URL в Vercel Dashboard → Settings → Environment Variables.";
+    } else {
+      details = `Код помилки: ${errorCode}`;
+    }
+
     return (
       <div className="container mx-auto px-4 py-8">
-        <div className="bg-red-500/10 border border-red-500/50 rounded-xl p-6 text-center">
-          <p className="text-red-500">
-            Помилка завантаження деталі. Перевірте підключення до бази даних.
-          </p>
+        <div className="bg-red-500/10 border border-red-500/50 rounded-xl p-6">
+          <p className="text-red-500 font-medium mb-2">{userMessage}</p>
+          {details && <p className="text-red-500/80 text-sm">{details}</p>}
+          {process.env.NODE_ENV === "development" && (
+            <details className="mt-4">
+              <summary className="cursor-pointer text-xs text-red-500/60">
+                Деталі помилки (тільки в development)
+              </summary>
+              <pre className="mt-2 p-2 bg-red-500/5 rounded text-xs overflow-auto">
+                {errorMessage}
+              </pre>
+            </details>
+          )}
         </div>
       </div>
     );
