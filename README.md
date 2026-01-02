@@ -95,6 +95,46 @@ localhost:3307
 
 Prisma не знає про SSH тунель — для нього це локальна БД на `127.0.0.1:3307`.
 
+### Deploy на Vercel
+
+#### 1. Налаштуйте Environment Variables
+
+У Vercel Dashboard → Settings → Environment Variables додайте:
+
+```
+DATABASE_URL=mysql://my-autotaile_vercel_app:wW4kW2rX4e@212.162.152.33:3306/database2024
+```
+
+Або з доменом (якщо працює стабільніше):
+
+```
+DATABASE_URL=mysql://my-autotaile_vercel_app:wW4kW2rX4e@auto-db.pro:3306/database2024
+```
+
+⚠️ **Важливо:** MySQL дозволяє підключення лише з певних IP. IP-адреси Vercel дозволені, але локальний IP — ні.
+
+#### 2. Тестування API
+
+Після деплою перевірте:
+
+- **API Endpoint:** `https://your-app.vercel.app/api/parts/1`
+
+  - Замініть `1` на реальний ID деталі з БД
+  - Повертає JSON з даними деталі
+
+- **Тестова сторінка:** `https://your-app.vercel.app/test-part`
+  - UI для тестування пошуку деталі за ID
+  - Компонент `PartDetail` для інтеграції в інші сторінки
+
+#### 3. Використання компонента PartDetail
+
+```tsx
+import PartDetail from "@/components/PartDetail";
+
+// У вашій сторінці
+<PartDetail initialPartId={123} />; // Опціонально: початковий ID
+```
+
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More
