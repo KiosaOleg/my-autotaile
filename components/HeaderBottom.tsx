@@ -1,10 +1,12 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { Search, User, ShoppingCart } from "lucide-react";
 import { useState, useEffect } from "react";
 import CartModal from "./CartModal";
 import AuthModal from "./AuthModal";
+import { ThemeToggle } from "./theme-toggle";
 // Auth functionality removed
 
 export default function HeaderBottom() {
@@ -17,7 +19,10 @@ export default function HeaderBottom() {
       <div className="container mx-auto px-4 py-2 lg:py-2">
         <div className="flex flex-wrap items-center justify-between gap-4 lg:gap-6">
           {/* Logo */}
-          <div className="flex items-center gap-3 lg:gap-4 shrink-0">
+          <Link
+            href="/"
+            className="flex items-center gap-3 lg:gap-4 shrink-0 hover:opacity-80 transition-opacity"
+          >
             <div className="relative w-16 h-16 lg:w-[72px] lg:h-[72px]">
               <Image
                 src="/logo.jpg"
@@ -36,7 +41,7 @@ export default function HeaderBottom() {
                 KICHUK AUTO
               </span>
             </div>
-          </div>
+          </Link>
 
           {/* Search & Actions */}
           <div className="flex items-center gap-3 flex-1 min-w-[220px] justify-center">
@@ -59,6 +64,7 @@ export default function HeaderBottom() {
 
           {/* Quick Icons */}
           <div className="flex items-center gap-3 lg:gap-4">
+            <ThemeToggle />
             <button
               onClick={() => setIsAuthOpen(true)}
               className="hidden lg:flex items-center gap-2 px-5 py-2.5 rounded-full border border-border text-sm font-medium text-secondary hover:border-primary hover:text-primary transition-colors"

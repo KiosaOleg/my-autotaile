@@ -1,12 +1,12 @@
 import { MessageCircle } from "lucide-react";
+import Link from "next/link";
 
 const topNavItems = [
-  { label: "Про компанію", href: "#" },
-  { label: "Контакти", href: "#" },
-  { label: "Доставка і оплата", href: "#" },
-  { label: "Умови повернення", href: "#" },
-  { label: "Політика конфіденційності", href: "#" },
-  { label: "Договір публічної оферти", href: "#" },
+  { label: "Про компанію", href: "/about" },
+  { label: "Контакти", href: "/contacts" },
+  { label: "Доставка і оплата", href: "/delivery" },
+  { label: "Умови повернення", href: "/returnsPolicy" },
+  { label: "Гарантія", href: "/warranty" },
 ];
 
 export default function HeaderTop() {
@@ -16,13 +16,13 @@ export default function HeaderTop() {
         <div className="flex items-center justify-between gap-3 flex-wrap text-xs text-(--foreground)/70">
           <nav className="flex items-center gap-3 flex-wrap">
             {topNavItems.map((item) => (
-              <a
+              <Link
                 key={item.label}
                 href={item.href}
                 className="hover:text-secondary transition-colors"
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </nav>
           <div className="flex flex-wrap items-center justify-end gap-4 text-(--foreground)/70">
@@ -59,4 +59,3 @@ export default function HeaderTop() {
     </div>
   );
 }
-
