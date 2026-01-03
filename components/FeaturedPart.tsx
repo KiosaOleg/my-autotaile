@@ -40,15 +40,29 @@ export default async function FeaturedPart({ partId }: FeaturedPartProps) {
       throw new Error(`Invalid partId: ${partId}`);
     }
 
+    // Тестовий запит для діагностики підключення
+    try {
+      const test = await prisma.$queryRaw`SELECT 1 as ok`;
+      console.log("Database connection test:", test);
+    } catch (testError) {
+      console.error("Database connection test failed:", testError);
+      throw new Error(
+        `Database connection failed: ${
+          testError instanceof Error ? testError.message : "Unknown error"
+        }`
+      );
+    }
+
     // SQL запит для отримання повної картки деталі
-    // Використовуємо Prisma.$queryRaw з параметрами для безпеки
-    const query = `
+    // Використовуємо Prisma.$queryRaw з template literals та параметрами
+    // Це забезпечує правильну обробку помилок MySQL
+    const result = (await prisma.$queryRaw<PartDetail[]>`
       SELECT
           a.ART_ID,
           a.ART_ARTICLE_NR        AS article_number,
           s.SUP_BRAND             AS brand,
           d.DES_TEXT              AS name,
-          i.IMG_URL               AS image_url
+          COALESCE(i.IMG_FILENAME, i.IMG_PATH, i.IMG_URL) AS image_url
       FROM ARTICLES a
       JOIN SUPPLIERS s
           ON s.SUP_ID = a.ART_SUP_ID
@@ -58,13 +72,8 @@ export default async function FeaturedPart({ partId }: FeaturedPartProps) {
           ON ai.ART_ID = a.ART_ID AND ai.IMG_SORT = 1
       LEFT JOIN IMAGES i
           ON i.IMG_ID = ai.IMG_ID
-      WHERE a.ART_ID = ?;
-    `;
-
-    // Виконуємо raw SQL запит через Prisma з параметром для безпеки
-    const result = (await prisma.$queryRawUnsafe(
-      query.replace("?", partId.toString())
-    )) as PartDetail[];
+      WHERE a.ART_ID = ${partId};
+    `) as PartDetail[];
 
     // Перевіряємо, чи знайдено деталь
     if (!result || result.length === 0) {
@@ -155,46 +164,85 @@ export default async function FeaturedPart({ partId }: FeaturedPartProps) {
       </section>
     );
   } catch (error) {
-    // Детальне логування помилки
+    // Детальне логування помилки з реальними MySQL помилками
     const errorMessage =
       error instanceof Error ? error.message : "Unknown error";
-    const errorCode =
-      error && typeof error === "object" && "code" in error
-        ? String(error.code)
-        : "UNKNOWN";
+
+    // Отримуємо реальний код помилки з Prisma/MySQL
+    let errorCode = "UNKNOWN";
+    let sqlState = null;
+    let sqlMessage = null;
+
+    if (error && typeof error === "object") {
+      // Prisma помилки
+      if ("code" in error) {
+        errorCode = String(error.code);
+      }
+      // MySQL помилки через Prisma
+      if ("meta" in error && error.meta && typeof error.meta === "object") {
+        if ("code" in error.meta) {
+          errorCode = String(error.meta.code);
+        }
+        if ("sqlState" in error.meta) {
+          sqlState = String(error.meta.sqlState);
+        }
+        if ("message" in error.meta) {
+          sqlMessage = String(error.meta.message);
+        }
+      }
+    }
 
     console.error("Error fetching featured part:", {
       error: errorMessage,
       code: errorCode,
+      sqlState,
+      sqlMessage,
       partId,
       hasDatabaseUrl: !!process.env.DATABASE_URL,
       databaseUrlPreview: process.env.DATABASE_URL
         ? `${process.env.DATABASE_URL.substring(0, 30)}...`
         : "not set",
+      fullError: error,
     });
 
     // Визначаємо тип помилки для кращого повідомлення
     let userMessage = "Помилка завантаження деталі.";
     let details = "";
 
-    if (errorMessage.includes("Authentication failed")) {
+    if (
+      errorMessage.includes("Authentication failed") ||
+      errorCode === "P1000"
+    ) {
       userMessage = "Помилка автентифікації з базою даних.";
       details =
         "Перевірте правильність DATABASE_URL в Vercel Environment Variables.";
     } else if (
       errorMessage.includes("connect") ||
       errorMessage.includes("ECONNREFUSED") ||
-      errorMessage.includes("ETIMEDOUT")
+      errorMessage.includes("ETIMEDOUT") ||
+      errorCode === "ECONNREFUSED"
     ) {
       userMessage = "Неможливо підключитися до бази даних.";
       details =
         "Перевірте, чи IP-адреси Vercel дозволені в налаштуваннях MySQL.";
+    } else if (
+      errorMessage.includes("doesn't exist") ||
+      errorMessage.includes("Unknown column") ||
+      errorMessage.includes("Table") ||
+      sqlMessage?.includes("doesn't exist") ||
+      sqlMessage?.includes("Unknown column")
+    ) {
+      userMessage = "Помилка SQL запиту.";
+      details = sqlMessage || errorMessage;
     } else if (errorMessage.includes("DATABASE_URL")) {
       userMessage = "DATABASE_URL не налаштований.";
       details =
         "Додайте DATABASE_URL в Vercel Dashboard → Settings → Environment Variables.";
     } else {
-      details = `Код помилки: ${errorCode}`;
+      details = sqlMessage || errorMessage || `Код помилки: ${errorCode}`;
+      if (sqlState) {
+        details += ` (SQL State: ${sqlState})`;
+      }
     }
 
     return (
