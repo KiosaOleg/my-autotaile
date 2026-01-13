@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,8 +7,1246 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Мінімальна модель для генерації Prisma Client
-// Після db pull ця модель буде замінена на реальні моделі з БД
-model Placeholder {
-  id Int @id @default(autoincrement())
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model article_acc {
+  supplierId                   Int    @db.UnsignedSmallInt
+  DataSupplierArticleNumber    String @db.VarChar(32)
+  AccSupplierId                Int    @db.UnsignedSmallInt
+  AccDataSupplierArticleNumber String @db.VarChar(32)
+
+  @@index([AccDataSupplierArticleNumber], map: "AccDataSupplierArticleNumber")
+  @@index([AccSupplierId], map: "AccSupplierId")
+  @@index([DataSupplierArticleNumber], map: "DataSupplierArticleNumber")
+  @@index([supplierId], map: "supplierId")
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model article_attributes {
+  supplierid                Int     @db.UnsignedSmallInt
+  datasupplierarticlenumber String  @db.VarChar(32)
+  id                        Int     @db.UnsignedSmallInt
+  description               String? @db.VarChar(128)
+  displaytitle              String  @db.VarChar(128)
+  displayvalue              String  @db.VarChar(4000)
+
+  @@index([supplierid, datasupplierarticlenumber], map: "article")
+  @@index([id], map: "id")
+  @@ignore
+}
+
+model article_cross {
+  manufacturerId                 Int    @db.UnsignedInt
+  OENbr                          String @db.VarChar(64)
+  SupplierId                     Int    @db.UnsignedSmallInt
+  PartsDataSupplierArticleNumber String @db.VarChar(32)
+
+  @@unique([manufacturerId, OENbr, SupplierId, PartsDataSupplierArticleNumber], map: "unique")
+  @@index([OENbr], map: "OENbr")
+  @@index([SupplierId, PartsDataSupplierArticleNumber], map: "SupplierId")
+  @@index([manufacturerId], map: "manufacturerId")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model article_ean {
+  supplierid                Int    @db.UnsignedSmallInt
+  datasupplierarticlenumber String @db.VarChar(32)
+  ean                       String @db.VarChar(24)
+
+  @@index([ean], map: "ean")
+  @@index([supplierid, datasupplierarticlenumber], map: "supplierid")
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model article_images {
+  supplierId                Int                            @db.UnsignedSmallInt
+  DataSupplierArticleNumber String                         @db.VarChar(32)
+  AdditionalDescription     String                         @db.VarChar(64)
+  Description               String                         @db.VarChar(64)
+  DocumentName              String                         @db.VarChar(255)
+  DocumentType              String                         @db.VarChar(8)
+  NormedDescriptionID       Int                            @db.UnsignedSmallInt
+  PictureName               String                         @db.VarChar(64)
+  ShowImmediately           article_images_ShowImmediately
+  TecdocHyperlinkName       String                         @db.VarChar(255)
+  FileName                  String                         @db.VarChar(255)
+
+  @@index([DocumentType], map: "DocumentType")
+  @@index([supplierId, DataSupplierArticleNumber], map: "supplierId")
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model article_inf {
+  supplierId                Int    @db.UnsignedSmallInt
+  DataSupplierArticleNumber String @db.VarChar(32)
+  InformationText           String @db.Text
+  InformationType           String @db.VarChar(64)
+  InformationTypeKey        Int    @db.UnsignedSmallInt
+
+  @@index([supplierId, DataSupplierArticleNumber], map: "supplierId")
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model article_li {
+  supplierId                Int    @db.UnsignedSmallInt
+  DataSupplierArticleNumber String @db.VarChar(32)
+  linkageTypeId             String @db.VarChar(32)
+  linkageId                 Int    @db.UnsignedInt
+
+  @@index([linkageTypeId], map: "linkageTypeId")
+  @@index([supplierId, DataSupplierArticleNumber], map: "supplierId")
+  @@ignore
+}
+
+model article_links {
+  supplierid                Int    @db.UnsignedSmallInt
+  productid                 Int    @db.UnsignedSmallInt
+  linkagetypeid             Int    @db.UnsignedSmallInt
+  linkageid                 Int    @db.UnsignedInt
+  datasupplierarticlenumber String @db.VarChar(32)
+
+  @@id([supplierid, productid, linkageid, linkagetypeid, datasupplierarticlenumber])
+  @@index([datasupplierarticlenumber], map: "datasupplierarticlenumber")
+  @@index([linkageid], map: "linkageid")
+  @@index([linkagetypeid], map: "linkagetypeid")
+  @@index([productid], map: "productid")
+  @@index([supplierid], map: "supplierid")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model article_nn {
+  supplierid                   Int    @db.UnsignedSmallInt
+  datasupplierarticlenumber    String @db.VarChar(32)
+  newnbr                       String @db.VarChar(32)
+  newsupplierid                Int    @db.UnsignedSmallInt
+  newdatasupplierarticlenumber String @db.VarChar(32)
+
+  @@index([supplierid, datasupplierarticlenumber], map: "supplierid")
+  @@ignore
+}
+
+model article_numbers {
+  supplierid                Int    @db.UnsignedSmallInt
+  datasupplierarticlenumber String @db.VarChar(32)
+
+  @@id([supplierid, datasupplierarticlenumber])
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model article_oe {
+  supplierid                Int                   @db.UnsignedSmallInt
+  datasupplierarticlenumber String                @db.VarChar(32)
+  IsAdditive                article_oe_IsAdditive
+  OENbr                     String                @db.VarChar(64)
+  OENbr_clr                 String                @db.VarChar(64)
+  manufacturerId            Int                   @db.UnsignedInt
+
+  @@index([OENbr], map: "OENbr")
+  @@index([OENbr_clr], map: "OENbr_clr")
+  @@index([manufacturerId], map: "manufacturerId")
+  @@index([supplierid, datasupplierarticlenumber], map: "supplierid")
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model article_parts {
+  supplierId                     Int    @db.UnsignedSmallInt
+  DataSupplierArticleNumber      String @db.VarChar(32)
+  Quantity                       Int
+  PartsSupplierId                Int    @db.SmallInt
+  PartsDataSupplierArticleNumber String @db.VarChar(32)
+
+  @@index([supplierId, DataSupplierArticleNumber], map: "supplierId")
+  @@ignore
+}
+
+model article_prd {
+  supplierid                Int    @db.UnsignedSmallInt
+  datasupplierarticlenumber String @db.VarChar(32)
+  productId                 Int    @db.UnsignedInt
+
+  @@id([supplierid, datasupplierarticlenumber, productId])
+  @@index([supplierid, datasupplierarticlenumber], map: "supplierid")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model article_rn {
+  supplierid                       Int    @db.UnsignedSmallInt
+  datasupplierarticlenumber        String @db.VarChar(32)
+  replacenbr                       String @db.VarChar(32)
+  replacedupplierid                Int    @db.UnsignedSmallInt
+  replacedatasupplierarticlenumber String @db.VarChar(32)
+
+  @@index([supplierid, datasupplierarticlenumber], map: "supplierid")
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model article_un {
+  supplierid                Int    @db.UnsignedSmallInt
+  datasupplierarticlenumber String @db.VarChar(32)
+  utilityno                 String @db.VarChar(64)
+
+  @@index([supplierid, datasupplierarticlenumber], map: "supplierid")
+  @@ignore
+}
+
+model articles {
+  supplierId                Int                                @db.UnsignedSmallInt
+  DataSupplierArticleNumber String                             @db.VarChar(32)
+  ArticleStateDisplayValue  String                             @db.VarChar(128)
+  Description               String                             @db.VarChar(128)
+  FlagAccessory             articles_FlagAccessory
+  FlagMaterialCertification articles_FlagMaterialCertification
+  FlagRemanufactured        articles_FlagRemanufactured
+  FlagSelfServicePacking    articles_FlagSelfServicePacking
+  FoundString               String                             @db.VarChar(64)
+  HasAxle                   articles_HasAxle
+  HasCommercialVehicle      articles_HasCommercialVehicle
+  HasCVManuID               articles_HasCVManuID
+  HasEngine                 articles_HasEngine
+  HasLinkitems              articles_HasLinkitems
+  HasMotorbike              articles_HasMotorbike
+  HasPassengerCar           articles_HasPassengerCar
+  IsValid                   articles_IsValid
+  LotSize1                  Int?                               @db.UnsignedInt
+  LotSize2                  Int?                               @db.UnsignedInt
+  NormalizedDescription     String                             @db.VarChar(128)
+  PackingUnit               Int?                               @db.UnsignedInt
+  QuantityPerPackingUnit    Int?                               @db.UnsignedInt
+
+  @@id([supplierId, DataSupplierArticleNumber])
+  @@index([DataSupplierArticleNumber], map: "DataSupplierArticleNumber")
+  @@index([FoundString], map: "FoundString")
+  @@index([supplierId], map: "supplierId")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model axle_attributes {
+  axleid         Int     @db.UnsignedInt
+  attributegroup String? @db.VarChar(32)
+  attributetype  String? @db.VarChar(32)
+  displaytitle   String? @db.VarChar(32)
+  displayvalue   String? @db.VarChar(128)
+
+  @@index([attributegroup], map: "attributegroup")
+  @@index([axleid], map: "axleid")
+  @@ignore
+}
+
+model axle_pds {
+  axleid     Int @db.UnsignedInt
+  nodeid     Int @db.UnsignedInt
+  productid  Int @db.UnsignedInt
+  supplierid Int @db.UnsignedSmallInt
+
+  @@id([axleid, nodeid, productid, supplierid])
+  @@index([axleid], map: "axleid")
+  @@index([supplierid], map: "supplierid")
+}
+
+model axle_prd {
+  id                       Int    @id @db.UnsignedInt
+  assemblygroupdescription String @db.VarChar(128)
+  description              String @db.VarChar(128)
+  normalizeddescription    String @db.VarChar(128)
+  usagedescription         String @db.VarChar(128)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model axle_trees {
+  axleid       Int     @db.UnsignedInt
+  searchtreeid Int     @db.UnsignedInt
+  id           Int     @db.UnsignedInt
+  parentid     Int?    @db.UnsignedInt
+  description  String? @db.VarChar(128)
+
+  @@index([axleid], map: "axleid")
+  @@index([id], map: "id")
+  @@index([parentid], map: "parentid")
+  @@ignore
+}
+
+model axles {
+  id                   Int                        @id @db.UnsignedInt
+  canbedisplayed       axles_canbedisplayed?
+  constructioninterval String?                    @db.VarChar(24)
+  description          String?                    @db.VarChar(64)
+  fulldescription      String?                    @db.VarChar(128)
+  haslink              axles_haslink?
+  isaxle               axles_isaxle?
+  iscommercialvehicle  axles_iscommercialvehicle?
+  iscvmanufacturerid   axles_iscvmanufacturerid?
+  isengine             axles_isengine?
+  ismotorbike          axles_ismotorbike?
+  ispassengercar       axles_ispassengercar?
+  istransporter        axles_istransporter?
+  modelid              Int?                       @db.UnsignedInt
+
+  @@index([canbedisplayed, isaxle, istransporter, iscommercialvehicle, iscvmanufacturerid, isengine, ismotorbike, ispassengercar], map: "id")
+  @@index([modelid], map: "modelid")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model commercial_driver_cabs {
+  id          Int @db.UnsignedInt
+  drivercabid Int @db.UnsignedInt
+
+  @@index([drivercabid], map: "drivercabid")
+  @@index([id], map: "id")
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model commercial_vehicle_attributes {
+  commercialvehicleid Int     @db.UnsignedInt
+  attributegroup      String? @db.VarChar(32)
+  attributetype       String? @db.VarChar(32)
+  displaytitle        String? @db.VarChar(32)
+  displayvalue        String? @db.VarChar(128)
+
+  @@index([attributegroup], map: "attributegroup")
+  @@index([commercialvehicleid], map: "commercialvehicleid")
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model commercial_vehicle_axles {
+  id     Int @db.UnsignedInt
+  axleid Int @db.UnsignedInt
+
+  @@index([axleid], map: "axleid")
+  @@index([id], map: "id")
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model commercial_vehicle_engines {
+  id       Int @db.UnsignedInt
+  engineid Int @db.UnsignedInt
+
+  @@index([engineid], map: "engineid")
+  @@index([id], map: "id")
+  @@ignore
+}
+
+model commercial_vehicle_pds {
+  commertialvehicleid Int @db.UnsignedInt
+  nodeid              Int @db.UnsignedInt
+  productid           Int @db.UnsignedInt
+  supplierid          Int @db.UnsignedSmallInt
+
+  @@id([commertialvehicleid, nodeid, productid, supplierid])
+  @@index([commertialvehicleid], map: "commertialvehicleid")
+  @@index([supplierid, productid], map: "supplierid")
+}
+
+model commercial_vehicle_prd {
+  id                       Int    @id @db.UnsignedInt
+  assemblygroupdescription String @db.VarChar(128)
+  description              String @db.VarChar(128)
+  normalizeddescription    String @db.VarChar(128)
+  usagedescription         String @db.VarChar(128)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model commercial_vehicle_qsi {
+  commercialvehicleid Int     @db.UnsignedInt
+  description         String? @db.VarChar(128)
+  quickstarttype      Int?    @db.UnsignedSmallInt
+
+  @@index([commercialvehicleid], map: "commercialvehicleid")
+  @@ignore
+}
+
+model commercial_vehicle_sub_types {
+  id        Int
+  subtypeid Int
+
+  @@id([id, subtypeid])
+  @@index([id], map: "id")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model commercial_vehicle_trees {
+  commercialvehicleid Int
+  searchtreeid        Int
+  id                  Int
+  parentid            Int?
+  description         String? @db.VarChar(128)
+
+  @@index([commercialvehicleid], map: "commercialvehicleid")
+  @@index([id], map: "id")
+  @@index([parentid], map: "parentid")
+  @@ignore
+}
+
+model commercial_vehicles {
+  id                   Int                                      @id @db.UnsignedInt
+  canbedisplayed       commercial_vehicles_canbedisplayed?
+  constructioninterval String?                                  @db.VarChar(24)
+  description          String?                                  @db.VarChar(64)
+  fulldescription      String?                                  @db.VarChar(128)
+  haslink              commercial_vehicles_haslink?
+  isaxle               commercial_vehicles_isaxle?
+  iscommercialvehicle  commercial_vehicles_iscommercialvehicle?
+  iscvmanufacturerid   commercial_vehicles_iscvmanufacturerid?
+  isengine             commercial_vehicles_isengine?
+  ismotorbike          commercial_vehicles_ismotorbike?
+  ispassengercar       commercial_vehicles_ispassengercar?
+  istransporter        commercial_vehicles_istransporter?
+  modelid              Int?                                     @db.UnsignedInt
+
+  @@index([canbedisplayed, isaxle, iscommercialvehicle, iscvmanufacturerid, isengine, ismotorbike, ispassengercar, istransporter], map: "id")
+  @@index([modelid], map: "modelid")
+}
+
+model countries {
+  countrycode  String             @id @db.VarChar(4)
+  currencycode String?            @db.VarChar(4)
+  description  String?            @db.VarChar(128)
+  isgroup      countries_isgroup?
+  isocode2     String?            @db.VarChar(4)
+  isocode3     String?            @db.VarChar(4)
+  isocodeno    String?            @db.VarChar(4)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model engine_attributes {
+  engineid       Int
+  attributegroup String? @db.VarChar(32)
+  attributetype  String? @db.VarChar(32)
+  displaytitle   String? @db.VarChar(32)
+  displayvalue   String? @db.VarChar(128)
+
+  @@index([attributegroup], map: "attributegroup")
+  @@index([engineid], map: "engineid")
+  @@ignore
+}
+
+model engine_pds {
+  engineid   Int @db.UnsignedInt
+  nodeid     Int @db.UnsignedInt
+  productid  Int @db.UnsignedInt
+  supplierid Int @db.UnsignedSmallInt
+
+  @@id([engineid, nodeid, productid, supplierid])
+  @@index([engineid], map: "engineid")
+  @@index([supplierid], map: "supplierid")
+}
+
+model engine_prd {
+  id                       Int    @id @db.UnsignedInt
+  assemblygroupdescription String @db.VarChar(128)
+  description              String @db.VarChar(128)
+  normalizeddescription    String @db.VarChar(128)
+  usagedescription         String @db.VarChar(128)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model engine_qsi {
+  engineid       BigInt
+  description    String? @db.VarChar(128)
+  quickstarttype String? @db.VarChar(32)
+  validstate     String? @db.VarChar(32)
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model engine_trees {
+  engineid     Int     @db.UnsignedInt
+  searchtreeid Int     @db.UnsignedInt
+  id           Int     @db.UnsignedInt
+  parentid     Int?    @db.UnsignedInt
+  description  String? @db.VarChar(128)
+
+  @@index([engineid], map: "engineid")
+  @@index([id], map: "id")
+  @@index([parentid], map: "parentid")
+  @@ignore
+}
+
+model engines {
+  id                   Int                          @id @db.UnsignedInt
+  canbedisplayed       engines_canbedisplayed?
+  constructioninterval String?                      @db.VarChar(24)
+  description          String?                      @db.VarChar(64)
+  fulldescription      String?                      @db.VarChar(128)
+  haslink              engines_haslink?
+  haslinkitem          engines_haslinkitem?
+  isaxle               engines_isaxle?
+  iscommercialvehicle  engines_iscommercialvehicle?
+  iscvmanufacturerid   engines_iscvmanufacturerid?
+  isengine             engines_isengine?
+  ismotorbike          engines_ismotorbike?
+  ispassengercar       engines_ispassengercar?
+  istransporter        engines_istransporter?
+  manufacturerid       Int?                         @db.UnsignedInt
+  salesdescription     String?                      @db.VarChar(64)
+
+  @@index([canbedisplayed, isaxle, iscommercialvehicle, iscvmanufacturerid, isengine, ismotorbike, ispassengercar, istransporter], map: "id")
+  @@index([manufacturerid], map: "manufacturerid")
+}
+
+model languages {
+  id          Int     @id @db.UnsignedSmallInt
+  codepage    Int?    @db.UnsignedSmallInt
+  description String? @db.VarChar(16)
+  isocode2    String? @db.Char(2)
+
+  @@index([isocode2], map: "isocode2")
+}
+
+model manufacturers {
+  id                  Int                               @db.UnsignedInt
+  canbedisplayed      manufacturers_canbedisplayed?
+  description         String?                           @db.VarChar(64)
+  fulldescription     String?                           @db.VarChar(64)
+  haslink             manufacturers_haslink?
+  isaxle              manufacturers_isaxle
+  iscommercialvehicle manufacturers_iscommercialvehicle
+  isengine            manufacturers_isengine
+  ismotorbike         manufacturers_ismotorbike
+  ispassengercar      manufacturers_ispassengercar
+  istransporter       manufacturers_istransporter
+  isvgl               manufacturers_isvgl?
+  matchcode           String?                           @db.VarChar(64)
+
+  @@id([id, isaxle, iscommercialvehicle, isengine, ismotorbike, ispassengercar, istransporter])
+  @@index([canbedisplayed], map: "canbedisplayed")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model manufacturers_of_new_linkages {
+  id                  Int                                                @db.UnsignedInt
+  canbedisplayed      manufacturers_of_new_linkages_canbedisplayed?
+  description         String?                                            @db.VarChar(64)
+  fulldescription     String?                                            @db.VarChar(64)
+  haslink             manufacturers_of_new_linkages_haslink?
+  isaxle              manufacturers_of_new_linkages_isaxle?
+  iscommercialvehicle manufacturers_of_new_linkages_iscommercialvehicle?
+  iscvmanufacturerid  manufacturers_of_new_linkages_iscvmanufacturerid?
+  isengine            manufacturers_of_new_linkages_isengine?
+  ismotorbike         manufacturers_of_new_linkages_ismotorbike?
+  ispassengercar      manufacturers_of_new_linkages_ispassengercar?
+  istransporter       manufacturers_of_new_linkages_istransporter?
+  isvgl               manufacturers_of_new_linkages_isvgl?
+  matchcode           String?                                            @db.VarChar(64)
+  linkitemtype        String?                                            @db.VarChar(32)
+  supplier_id         Int                                                @db.UnsignedSmallInt
+
+  @@index([canbedisplayed, isaxle, iscommercialvehicle, iscvmanufacturerid, isengine, ismotorbike, ispassengercar, istransporter], map: "canbedisplayed")
+  @@index([id], map: "id")
+  @@index([supplier_id], map: "supplier_id")
+  @@ignore
+}
+
+model models {
+  id                   Int                        @db.UnsignedInt
+  canbedisplayed       models_canbedisplayed?
+  constructioninterval String?                    @db.VarChar(24)
+  description          String?                    @db.VarChar(128)
+  fulldescription      String?                    @db.VarChar(128)
+  haslink              models_haslink?
+  isaxle               models_isaxle
+  iscommercialvehicle  models_iscommercialvehicle
+  isengine             models_isengine
+  ismotorbike          models_ismotorbike
+  ispassengercar       models_ispassengercar
+  istransporter        models_istransporter
+  manufacturerid       Int?                       @db.UnsignedInt
+
+  @@id([id, isaxle, istransporter, ispassengercar, ismotorbike, isengine, iscommercialvehicle])
+  @@index([canbedisplayed], map: "canbedisplayed")
+  @@index([manufacturerid], map: "manufacturerid")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model motorbike_attributes {
+  motorbikeid    Int     @db.UnsignedInt
+  attributegroup String? @db.VarChar(32)
+  attributetype  String? @db.VarChar(32)
+  displaytitle   String? @db.VarChar(32)
+  displayvalue   String? @db.VarChar(128)
+
+  @@index([attributegroup], map: "attributegroup")
+  @@index([motorbikeid], map: "motorbikeid")
+  @@ignore
+}
+
+model motorbike_pds {
+  motorbikeid Int @db.UnsignedInt
+  nodeid      Int @db.UnsignedInt
+  productid   Int @db.UnsignedInt
+  supplierid  Int @db.UnsignedSmallInt
+
+  @@id([motorbikeid, nodeid, productid, supplierid])
+  @@index([motorbikeid], map: "motorbikeid")
+  @@index([productid, supplierid], map: "productid")
+}
+
+model motorbike_prd {
+  id                       Int    @id
+  assemblygroupdescription String @db.VarChar(128)
+  description              String @db.VarChar(128)
+  normalizeddescription    String @db.VarChar(128)
+  usagedescription         String @db.VarChar(128)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model motorbike_qsi {
+  motorbikeid    Int     @db.UnsignedInt
+  description    String? @db.VarChar(128)
+  quickstarttype Int?    @db.UnsignedSmallInt
+
+  @@index([motorbikeid], map: "motorbikeid")
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model motorbike_trees {
+  motorbikeid  Int     @db.UnsignedInt
+  searchtreeid Int     @db.UnsignedInt
+  id           Int     @db.UnsignedInt
+  parentid     Int?    @db.UnsignedInt
+  description  String? @db.VarChar(128)
+
+  @@index([id], map: "id")
+  @@index([motorbikeid], map: "motorbikeid")
+  @@index([parentid], map: "parentid")
+  @@ignore
+}
+
+model motorbikes {
+  id                   Int                             @id @db.UnsignedInt
+  canbedisplayed       motorbikes_canbedisplayed?
+  constructioninterval String?                         @db.VarChar(24)
+  description          String?                         @db.VarChar(64)
+  fulldescription      String?                         @db.VarChar(128)
+  haslink              motorbikes_haslink?
+  isaxle               motorbikes_isaxle?
+  iscommercialvehicle  motorbikes_iscommercialvehicle?
+  iscvmanufacturerid   motorbikes_iscvmanufacturerid?
+  isengine             motorbikes_isengine?
+  ismotorbike          motorbikes_ismotorbike?
+  ispassengercar       motorbikes_ispassengercar?
+  istransporter        motorbikes_istransporter?
+  modelid              Int?                            @db.UnsignedInt
+
+  @@index([canbedisplayed, isaxle, iscommercialvehicle, iscvmanufacturerid, isengine, ismotorbike, ispassengercar, istransporter], map: "id")
+  @@index([modelid], map: "modelid")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model passanger_car_attributes {
+  passangercarid Int     @db.UnsignedInt
+  attributegroup String? @db.VarChar(32)
+  attributetype  String? @db.VarChar(32)
+  displaytitle   String? @db.VarChar(32)
+  displayvalue   String? @db.VarChar(128)
+
+  @@index([attributegroup], map: "attributegroup")
+  @@index([passangercarid], map: "passangercarid")
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model passanger_car_engines {
+  id       Int @db.UnsignedInt
+  engineid Int @db.UnsignedInt
+
+  @@index([engineid], map: "engineid")
+  @@index([id], map: "id")
+  @@ignore
+}
+
+model passanger_car_pds {
+  passangercarid Int @db.UnsignedInt
+  nodeid         Int @db.UnsignedInt
+  productid      Int @db.UnsignedInt
+  supplierid     Int @db.UnsignedSmallInt
+
+  @@id([passangercarid, nodeid, productid, supplierid])
+  @@index([nodeid], map: "nodeid")
+  @@index([passangercarid], map: "passangercarid")
+  @@index([productid], map: "productid")
+  @@index([supplierid], map: "supplierid")
+}
+
+model passanger_car_prd {
+  id                       Int    @id @db.UnsignedInt
+  assemblygroupdescription String @db.VarChar(128)
+  description              String @db.VarChar(128)
+  normalizeddescription    String @db.VarChar(128)
+  usagedescription         String @db.VarChar(128)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model passanger_car_qsi {
+  passangercarid Int     @db.UnsignedInt
+  description    String? @db.VarChar(128)
+  quickstarttype Int?    @db.UnsignedSmallInt
+
+  @@index([passangercarid], map: "passangercarid")
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model passanger_car_trees {
+  passangercarid Int     @db.UnsignedInt
+  searchtreeid   Int     @db.UnsignedInt
+  id             Int     @db.UnsignedInt
+  parentid       Int?    @db.UnsignedInt
+  description    String? @db.VarChar(128)
+
+  @@index([id], map: "id")
+  @@index([parentid], map: "parentid")
+  @@index([passangercarid], map: "passangercarid")
+  @@ignore
+}
+
+model passanger_cars {
+  id                   Int                                 @id @db.UnsignedInt
+  canbedisplayed       passanger_cars_canbedisplayed?
+  constructioninterval String?                             @db.VarChar(24)
+  description          String?                             @db.VarChar(128)
+  fulldescription      String?                             @db.VarChar(255)
+  haslink              passanger_cars_haslink?
+  isaxle               passanger_cars_isaxle?
+  iscommercialvehicle  passanger_cars_iscommercialvehicle?
+  iscvmanufacturerid   passanger_cars_iscvmanufacturerid?
+  isengine             passanger_cars_isengine?
+  ismotorbike          passanger_cars_ismotorbike?
+  ispassengercar       passanger_cars_ispassengercar?
+  istransporter        passanger_cars_istransporter?
+  modelid              Int?                                @db.UnsignedInt
+
+  @@index([canbedisplayed, isaxle, iscommercialvehicle, iscvmanufacturerid, isengine, ismotorbike, ispassengercar, istransporter], map: "id")
+  @@index([modelid], map: "modelid")
+}
+
+model prd {
+  id                       Int    @id @db.UnsignedInt
+  assemblygroupdescription String @db.VarChar(128)
+  description              String @db.VarChar(128)
+  normalizeddescription    String @db.VarChar(128)
+  usagedescription         String @db.VarChar(128)
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model supplier_details {
+  supplierid           Int     @db.UnsignedSmallInt
+  addresstype          String? @db.VarChar(32)
+  addresstypeid        String  @db.Char(1)
+  city1                String? @db.VarChar(64)
+  city2                String? @db.VarChar(64)
+  countrycode          String? @db.VarChar(64)
+  email                String? @db.VarChar(64)
+  fax                  String? @db.VarChar(64)
+  homepage             String? @db.VarChar(64)
+  name1                String? @db.VarChar(64)
+  name2                String? @db.VarChar(64)
+  postalcodecity       String? @db.VarChar(32)
+  postalcodepob        String? @db.VarChar(32)
+  postalcodewholesaler String? @db.VarChar(32)
+  postalcountrycode    String? @db.VarChar(32)
+  postofficebox        String? @db.VarChar(32)
+  street1              String? @db.VarChar(64)
+  street2              String? @db.VarChar(64)
+  telephone            String? @db.VarChar(32)
+
+  @@index([supplierid, addresstypeid], map: "supplierid")
+  @@ignore
+}
+
+model suppliers {
+  id                    Int                              @id @db.UnsignedSmallInt
+  dataversion           Int?                             @db.UnsignedSmallInt
+  description           String?                          @db.VarChar(32)
+  matchcode             String?                          @db.VarChar(32)
+  nbrofarticles         Int?                             @db.UnsignedInt
+  hasnewversionarticles suppliers_hasnewversionarticles?
+
+  @@index([description], map: "description")
+}
+
+model suppliers_with_nv_articles {
+  id                    Int                                               @id @db.SmallInt
+  dataversion           Int?                                              @db.SmallInt
+  description           String?                                           @db.VarChar(32)
+  matchcode             String?                                           @db.VarChar(32)
+  nbrofarticles         Int?                                              @db.UnsignedInt
+  hasnewversionarticles suppliers_with_nv_articles_hasnewversionarticles?
+
+  @@index([description], map: "description")
+}
+
+model suppliers_with_nv_linkages {
+  id                    Int                                               @id @db.UnsignedSmallInt
+  dataversion           Int?                                              @db.UnsignedSmallInt
+  description           String?                                           @db.VarChar(32)
+  matchcode             String?                                           @db.VarChar(32)
+  nbrofarticles         Int?                                              @db.UnsignedInt
+  hasnewversionarticles suppliers_with_nv_linkages_hasnewversionarticles?
+
+  @@index([description], map: "description")
+}
+
+enum axles_canbedisplayed {
+  True
+  False
+}
+
+enum commercial_vehicles_canbedisplayed {
+  True
+  False
+}
+
+enum engines_canbedisplayed {
+  True
+  False
+}
+
+enum manufacturers_canbedisplayed {
+  True
+  False
+}
+
+enum manufacturers_of_new_linkages_canbedisplayed {
+  True
+  False
+}
+
+enum models_canbedisplayed {
+  True
+  False
+}
+
+enum motorbikes_canbedisplayed {
+  True
+  False
+}
+
+enum passanger_cars_canbedisplayed {
+  True
+  False
+}
+
+enum article_oe_IsAdditive {
+  True
+  False
+}
+
+enum countries_isgroup {
+  True
+  False
+}
+
+enum articles_FlagAccessory {
+  True
+  False
+}
+
+enum manufacturers_haslink {
+  True
+  False
+}
+
+enum manufacturers_of_new_linkages_haslink {
+  True
+  False
+}
+
+enum articles_FlagMaterialCertification {
+  True
+  False
+}
+
+enum axles_haslink {
+  True
+  False
+}
+
+enum commercial_vehicles_haslink {
+  True
+  False
+}
+
+enum engines_haslink {
+  True
+  False
+}
+
+enum manufacturers_isaxle {
+  True
+  False
+}
+
+enum manufacturers_of_new_linkages_isaxle {
+  True
+  False
+}
+
+enum models_haslink {
+  True
+  False
+}
+
+enum motorbikes_haslink {
+  True
+  False
+}
+
+enum passanger_cars_haslink {
+  True
+  False
+}
+
+enum suppliers_hasnewversionarticles {
+  True
+  False
+}
+
+enum suppliers_with_nv_articles_hasnewversionarticles {
+  True
+  False
+}
+
+enum suppliers_with_nv_linkages_hasnewversionarticles {
+  True
+  False
+}
+
+enum articles_FlagRemanufactured {
+  True
+  False
+}
+
+enum axles_isaxle {
+  True
+  False
+}
+
+enum commercial_vehicles_isaxle {
+  True
+  False
+}
+
+enum engines_haslinkitem {
+  True
+  False
+}
+
+enum manufacturers_iscommercialvehicle {
+  True
+  False
+}
+
+enum manufacturers_of_new_linkages_iscommercialvehicle {
+  True
+  False
+}
+
+enum models_isaxle {
+  True
+  False
+}
+
+enum motorbikes_isaxle {
+  True
+  False
+}
+
+enum passanger_cars_isaxle {
+  True
+  False
+}
+
+enum articles_FlagSelfServicePacking {
+  True
+  False
+}
+
+enum axles_iscommercialvehicle {
+  True
+  False
+}
+
+enum commercial_vehicles_iscommercialvehicle {
+  True
+  False
+}
+
+enum engines_isaxle {
+  True
+  False
+}
+
+enum manufacturers_isengine {
+  True
+  False
+}
+
+enum manufacturers_of_new_linkages_iscvmanufacturerid {
+  True
+  False
+}
+
+enum models_iscommercialvehicle {
+  True
+  False
+}
+
+enum motorbikes_iscommercialvehicle {
+  True
+  False
+}
+
+enum passanger_cars_iscommercialvehicle {
+  True
+  False
+}
+
+enum article_images_ShowImmediately {
+  True
+  False
+}
+
+enum axles_iscvmanufacturerid {
+  True
+  False
+}
+
+enum commercial_vehicles_iscvmanufacturerid {
+  True
+  False
+}
+
+enum engines_iscommercialvehicle {
+  True
+  False
+}
+
+enum manufacturers_ismotorbike {
+  True
+  False
+}
+
+enum manufacturers_of_new_linkages_isengine {
+  True
+  False
+}
+
+enum models_isengine {
+  True
+  False
+}
+
+enum motorbikes_iscvmanufacturerid {
+  True
+  False
+}
+
+enum passanger_cars_iscvmanufacturerid {
+  True
+  False
+}
+
+enum articles_HasAxle {
+  True
+  False
+}
+
+enum axles_isengine {
+  True
+  False
+}
+
+enum commercial_vehicles_isengine {
+  True
+  False
+}
+
+enum engines_iscvmanufacturerid {
+  True
+  False
+}
+
+enum manufacturers_ispassengercar {
+  True
+  False
+}
+
+enum manufacturers_of_new_linkages_ismotorbike {
+  True
+  False
+}
+
+enum models_ismotorbike {
+  True
+  False
+}
+
+enum motorbikes_isengine {
+  True
+  False
+}
+
+enum passanger_cars_isengine {
+  True
+  False
+}
+
+enum articles_HasCommercialVehicle {
+  True
+  False
+}
+
+enum axles_ismotorbike {
+  True
+  False
+}
+
+enum commercial_vehicles_ismotorbike {
+  True
+  False
+}
+
+enum engines_isengine {
+  True
+  False
+}
+
+enum manufacturers_istransporter {
+  True
+  False
+}
+
+enum manufacturers_of_new_linkages_ispassengercar {
+  True
+  False
+}
+
+enum models_ispassengercar {
+  True
+  False
+}
+
+enum motorbikes_ismotorbike {
+  True
+  False
+}
+
+enum passanger_cars_ismotorbike {
+  True
+  False
+}
+
+enum articles_HasCVManuID {
+  True
+  False
+}
+
+enum axles_ispassengercar {
+  True
+  False
+}
+
+enum commercial_vehicles_ispassengercar {
+  True
+  False
+}
+
+enum engines_ismotorbike {
+  True
+  False
+}
+
+enum manufacturers_isvgl {
+  True
+  False
+}
+
+enum manufacturers_of_new_linkages_istransporter {
+  True
+  False
+}
+
+enum models_istransporter {
+  True
+  False
+}
+
+enum motorbikes_ispassengercar {
+  True
+  False
+}
+
+enum passanger_cars_ispassengercar {
+  True
+  False
+}
+
+enum articles_HasEngine {
+  True
+  False
+}
+
+enum axles_istransporter {
+  True
+  False
+}
+
+enum commercial_vehicles_istransporter {
+  True
+  False
+}
+
+enum engines_ispassengercar {
+  True
+  False
+}
+
+enum manufacturers_of_new_linkages_isvgl {
+  True
+  False
+}
+
+enum motorbikes_istransporter {
+  True
+  False
+}
+
+enum passanger_cars_istransporter {
+  True
+  False
+}
+
+enum articles_HasLinkitems {
+  True
+  False
+}
+
+enum engines_istransporter {
+  True
+  False
+}
+
+enum articles_HasMotorbike {
+  True
+  False
+}
+
+enum articles_HasPassengerCar {
+  True
+  False
+}
+
+enum articles_IsValid {
+  True
+  False
 }

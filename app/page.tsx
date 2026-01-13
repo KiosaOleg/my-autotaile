@@ -7,40 +7,28 @@ import Footer from "@/components/Footer";
 import PartsRequestForm from "@/components/PartsRequestForm";
 import FeaturedPart from "@/components/FeaturedPart";
 
-// Забороняємо SSG - сторінка буде рендеритися динамічно на runtime
-// Це необхідно, оскільки FeaturedPart робить Prisma запит до БД
+// Динамічна сторінка, оскільки FeaturedPart робить запит до БД
 export const dynamic = "force-dynamic";
 
 export default function Home() {
-  // ID деталі для відображення (можна змінити на будь-який існуючий ID)
-  const featuredPartId = 1;
+  // ID виробника для відображення деталі (замість partId)
+  const featuredSupplierId = 1;
 
   return (
     <main className="min-h-screen">
       <div className="flex flex-col gap-16 mb-16">
-        {/* Герой банер */}
         <BannerCarousel />
-
-        {/* Кнопка для відкриття форми підбору */}
         <PartsRequestButton />
-
-        {/* Інформаційний блок */}
         <TextBlock />
 
         {/* Рекомендована деталь з БД */}
-        <FeaturedPart partId={featuredPartId} />
+        <FeaturedPart supplierId={featuredSupplierId} />
 
-        {/* Популярні товари */}
         <PopularProducts />
-
-        {/* Соціальні мережі */}
         <SocialLinks />
-
-        {/* Додаткова кнопка для форми */}
         <PartsRequestForm />
       </div>
 
-      {/* Підвал */}
       <Footer />
     </main>
   );
