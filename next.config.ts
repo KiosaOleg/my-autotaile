@@ -1,7 +1,11 @@
-import type { NextConfig } from "next";
+import { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  reactStrictMode: true,
+  images: {
+    domains: ["image.auto-db.pro", "via.placeholder.com"],
+    formats: ["image/avif", "image/webp"],
+  },
 };
 
 export default nextConfig;

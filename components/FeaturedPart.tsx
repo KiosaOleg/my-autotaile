@@ -1,108 +1,58 @@
-import { prisma } from "@/lib/db";
-import Image from "next/image";
+"use client";
+import { useEffect, useState } from "react";
 import { Package } from "lucide-react";
 
 interface PartDetail {
-  supplierId: number;
-  article_number: string;
-  brand: string | null;
+  artId: string;
+  articleNumber: string;
   name: string;
-  image_url: string | null;
+  brand: string | null;
+  imageUrl: string;
 }
 
-interface FeaturedPartProps {
-  supplierId: number;
-}
+export default function FeaturedPartsList() {
+  const [parts, setParts] = useState<PartDetail[]>([]);
+  const [loading, setLoading] = useState(true);
 
-export default async function FeaturedPart({ supplierId }: FeaturedPartProps) {
-  if (!process.env.DATABASE_URL) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <p className="text-yellow-500">DATABASE_URL не налаштований</p>
-      </div>
-    );
-  }
+  useEffect(() => {
+    fetch("/api/featured-parts")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) setParts(data.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
+  }, []);
 
-  if (!Number.isInteger(supplierId) || supplierId <= 0) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <p className="text-red-500">Некоректний supplierId</p>
-      </div>
-    );
-  }
+  if (loading) return <p className="text-center py-8">Завантаження...</p>;
+  if (parts.length === 0)
+    return <p className="text-center py-8">Деталі не знайдені</p>;
 
-  try {
-    const result = await prisma.$queryRaw<PartDetail[]>`
-      SELECT
-        a.supplierId,
-        a.DataSupplierArticleNumber AS article_number,
-        s.description AS brand,
-        COALESCE(a.NormalizedDescription, a.Description) AS name,
-        CONCAT('https://cdn.example.com/', ai.PictureName) AS image_url
-      FROM articles a
-      JOIN suppliers s
-        ON s.id = a.supplierId
-      LEFT JOIN article_images ai
-        ON ai.SupplierId = a.supplierId
-        AND ai.DataSupplierArticleNumber = a.DataSupplierArticleNumber
-        AND ai.ShowImmediately = TRUE
-      WHERE a.supplierId = ${supplierId}
-      LIMIT 1;
-    `;
-
-    if (!result || result.length === 0) {
-      return (
-        <div className="container mx-auto px-4 py-8">
-          <p className="text-muted-foreground">Деталь не знайдена</p>
-        </div>
-      );
-    }
-
-    const part = result[0];
-
-    return (
-      <section className="container mx-auto px-4 py-12">
-        <div className="bg-card border rounded-xl p-6 grid md:grid-cols-2 gap-6">
-          {/* Зображення */}
-          <div className="flex items-center justify-center bg-muted rounded-lg h-64">
-            {part.image_url ? (
-              <Image
-                src={part.image_url}
+  return (
+    <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {parts.map((part) => (
+        <div key={part.artId} className="bg-card border rounded-xl p-4">
+          <div className="h-48 bg-muted rounded-lg flex items-center justify-center overflow-hidden mb-4">
+            {part.imageUrl ? (
+              <img
+                src={part.imageUrl}
                 alt={part.name}
-                width={400}
-                height={400}
+                width={200}
+                height={200}
                 className="object-contain"
               />
             ) : (
-              <Package size={64} className="text-muted-foreground" />
+              <Package size={48} className="text-muted-foreground" />
             )}
           </div>
-
-          {/* Інформація */}
-          <div className="space-y-4">
-            <h3 className="text-2xl font-bold">
-              {part.brand ?? "Невідомий бренд"}
-            </h3>
-
-            <div>
-              <p className="text-sm text-muted-foreground">Артикул</p>
-              <p className="font-semibold">{part.article_number}</p>
-            </div>
-
-            <div>
-              <p className="text-sm text-muted-foreground">Назва</p>
-              <p>{part.name}</p>
-            </div>
-          </div>
+          <h3 className="font-bold">{part.brand ?? "Бренд невідомий"}</h3>
+          <p className="text-sm text-muted-foreground">{part.articleNumber}</p>
+          <p className="text-sm">{part.name}</p>
         </div>
-      </section>
-    );
-  } catch (error) {
-    console.error("FeaturedPart DB error:", error);
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <p className="text-red-500">Помилка запиту до БД</p>
-      </div>
-    );
-  }
+      ))}
+    </section>
+  );
 }

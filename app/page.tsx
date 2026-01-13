@@ -5,14 +5,14 @@ import PopularProducts from "@/components/PopularProducts";
 import SocialLinks from "@/components/SocialLinks";
 import Footer from "@/components/Footer";
 import PartsRequestForm from "@/components/PartsRequestForm";
-import FeaturedPart from "@/components/FeaturedPart";
+import FeaturedPartsList from "@/components/FeaturedPart";
 
 // Динамічна сторінка, оскільки FeaturedPart робить запит до БД
 export const dynamic = "force-dynamic";
 
 export default function Home() {
   // ID виробника для відображення деталі (замість partId)
-  const featuredSupplierId = 1;
+  // const featuredSupplierId = 1;
 
   return (
     <main className="min-h-screen">
@@ -22,7 +22,7 @@ export default function Home() {
         <TextBlock />
 
         {/* Рекомендована деталь з БД */}
-        <FeaturedPart supplierId={featuredSupplierId} />
+        <FeaturedPartsList />
 
         <PopularProducts />
         <SocialLinks />
