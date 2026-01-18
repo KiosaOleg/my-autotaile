@@ -6,6 +6,7 @@ import SocialLinks from "@/components/SocialLinks";
 import Footer from "@/components/Footer";
 import PartsRequestForm from "@/components/PartsRequestForm";
 import FeaturedPartsList from "@/components/FeaturedPart";
+import UniqTradeTest from "@/components/UniqTradeTest";
 
 // Динамічна сторінка, оскільки FeaturedPart робить запит до БД
 export const dynamic = "force-dynamic";
@@ -23,6 +24,10 @@ export default function Home() {
 
         {/* Рекомендована деталь з БД */}
         <FeaturedPartsList />
+        
+
+        {/* Тестування UniqTrade API */}
+        <UniqTradeTest />
 
         <PopularProducts />
         <SocialLinks />
