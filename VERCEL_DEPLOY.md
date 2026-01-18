@@ -116,11 +116,68 @@ npm run dev
 2. **Database URL з VPN**: Використовуйте VPN для стабільного доступу
 3. **External Database**: Перейдіть на Vercel Postgres або іншу хмарну БД
 
+## 🆕 Новий підхід з pnpm
+
+### Конфігурація для успішного деплою
+
+#### 1. pnpm налаштування
+```bash
+# Встановіть shamefully-hoist режим
+pnpm install --shamefully-hoist
+
+# Перевірте збірку
+pnpm build
+```
+
+#### 2. Vercel конфігурація (vercel.json)
+```json
+{
+  "build": {
+    "env": {
+      "DATABASE_URL": "mysql://localhost:3306/fake"
+    }
+  },
+  "functions": {
+    "api/**/*.ts": {
+      "includeFiles": ["node_modules/@prisma/client/**/*"],
+      "maxDuration": 30
+    }
+  },
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm build",
+  "devCommand": "pnpm dev"
+}
+```
+
+#### 3. Next.js зображення (next.config.ts)
+```typescript
+images: {
+  remotePatterns: [
+    {
+      protocol: "https",
+      hostname: "s3-eu-north-1.amazonaws.com",
+      pathname: "/utr-detail-images/**"
+    }
+  ]
+}
+```
+
+### Команди деплою
+
+```bash
+# Деплой на Vercel
+pnpm run deploy:vercel
+
+# Або вручну
+vercel deploy --prod
+```
+
 ## 📋 Команди для різних сценаріїв
 
 | Сценарій | Команда | Опис |
 |----------|---------|------|
 | Локальна розробка | `npm run db:setup && npm run dev` | Повна настройка з БД |
-| Production build | `npm run build` | Збірка без доступу до БД |
+| Production build | `pnpm build` | Збірка без доступу до БД |
+| Деплой Vercel | `pnpm run deploy:vercel` | Деплой з pnpm |
 | Full build (локально) | `npm run build:full` | Збірка з оновленням схеми |
 | SSH тунель | `npm run db:tunnel` | Підключення до БД через SSH |

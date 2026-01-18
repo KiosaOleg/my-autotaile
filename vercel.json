@@ -1,16 +1,19 @@
 {
+  "build": {
+    "env": {
+      "DATABASE_URL": "mysql://localhost:3306/fake"
+    }
+  },
   "functions": {
-    "app/api/**/*.ts": {
+    "api/**/*.ts": {
+      "includeFiles": [
+        "node_modules/@prisma/client/**/*"
+      ],
       "maxDuration": 30
     }
   },
   "regions": ["fra1"],
-  "build": {
-    "env": {
-      "NODE_ENV": "production"
-    }
-  },
-  "installCommand": "npm install",
-  "buildCommand": "npm run build",
-  "devCommand": "npm run dev"
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm build",
+  "devCommand": "pnpm dev"
 }

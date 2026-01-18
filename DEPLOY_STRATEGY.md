@@ -108,11 +108,76 @@ git push
 - ✅ Простий деплой
 - ❌ Потрібно налаштувати
 
+## 🚀 Новий підхід з pnpm + Vercel
+
+### ⚙️ Оновлена конфігурація
+
+#### 1. pnpm shamefully-hoist режим
+```bash
+pnpm install --shamefully-hoist
+```
+- Вирішує проблеми з symlink у Serverless Functions
+- Робить node_modules плоским
+
+#### 2. Vercel конфігурація (vercel.json)
+```json
+{
+  "build": {
+    "env": {
+      "DATABASE_URL": "mysql://localhost:3306/fake"
+    }
+  },
+  "functions": {
+    "api/**/*.ts": {
+      "includeFiles": ["node_modules/@prisma/client/**/*"],
+      "maxDuration": 30
+    }
+  },
+  "regions": ["fra1"],
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm build",
+  "devCommand": "pnpm dev"
+}
+```
+
+#### 3. Next.js конфігурація зображень
+```typescript
+images: {
+  remotePatterns: [
+    {
+      protocol: "https",
+      hostname: "image.auto-db.pro",
+      pathname: "/images/**"
+    },
+    {
+      protocol: "https",
+      hostname: "s3-eu-north-1.amazonaws.com",
+      pathname: "/utr-detail-images/**"
+    }
+  ]
+}
+```
+
+### 📦 Команди деплою
+
+```bash
+# Локальна збірка
+pnpm build
+
+# Деплой на Vercel
+pnpm run deploy:vercel
+
+# Або вручну
+vercel deploy --prod
+```
+
 ## 📊 Поточний статус
 
-- ✅ Next.js додаток збирається без помилок
-- ✅ Prisma Client генерується під час збірки
+- ✅ Next.js додаток збирається без помилок з pnpm
+- ✅ Prisma Client включається у Serverless Functions
+- ✅ Зображення підтримуються з S3 та auto-db.pro
 - ✅ API routes працюють з runtime підключенням
 - ✅ UniqTrade API інтегровано
 - ✅ Shadcn/ui компоненти додані
+- ✅ pnpm shamefully-hoist налаштовано
 - ⚠️ Потрібно протестувати production API calls
