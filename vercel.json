@@ -5,8 +5,11 @@
     }
   },
   "functions": {
-    "api/**/*.ts": {
-      "includeFiles": "node_modules/@prisma/client/**"
+    "app/api/**/*.ts": {
+      "includeFiles": [
+        "node_modules/@prisma/client/**/*"
+      ],
+      "maxDuration": 30
     }
   }
 }
